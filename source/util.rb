@@ -37,20 +37,20 @@ class Util
     def profiles
       {
         bgcolor: {
-          light: '#fff',
+          print: '#fff',
           indigo: 'hsla(232,15%,21%,1)'
         },
         fgcolor: {
-          light: '#000',
+          print: '#000',
           indigo: 'hsla(232,75%,95%,1)'
         },
         prebgcolor: {
-          light: '#eee',
+          print: '#eee',
           indigo: 'hsla(232,15%,15%,1)'
   
         },
         prefgcolor: {
-          light: '#000',
+          print: '#000',
           indigo: 'hsla(232,18%,86%,1)'
   
         }
@@ -58,7 +58,7 @@ class Util
     end
   
     def generate_css(profile=:indigo)
-      File.write('css/main.css', out(profile))
+      File.write("css/#{profile}.css", out(profile))
     end
   
     def bigfonts

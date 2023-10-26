@@ -52,7 +52,10 @@ class Util
         prefgcolor: {
           print: '#000',
           indigo: 'hsla(232,18%,86%,1)'
-  
+        },
+        linkcolor: {
+          print: '#337ab7',
+          indigo: '#4d8bc1'
         }
       }
     end
@@ -227,6 +230,10 @@ class Util
         margin-right: 0.2rem;
         margin-top: -1.5rem;
         margin-bottom: -3.0rem;
+      }
+
+      a {
+        color: #{profiles[:linkcolor][profile]}
       }
   
       hr {

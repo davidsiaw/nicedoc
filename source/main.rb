@@ -1,10 +1,21 @@
 require 'yaml'
 
-def page(filename, path)
-  nd = Nicedoc.new(File.read(filename))
+def disp_page(filename, path)
+  nd = Nicedoc.new(filename)
 
   nd.renderer.generate(path, self)
+end
 
+
+def source_page(filename, path)
+  empty_page path, "source of #{filename}" do
+    request_css 'css/main.css'
+    row do
+      col 9 do
+        pre File.read(filename)
+      end
+    end
+  end
 end
 
 

@@ -1,155 +1,229 @@
+require 'active_support/inflector'
+
 class NicedocRenderer
-    def initialize(contents, yaml)
-      @contents = contents
-      @yaml = yaml
-    end
-  
-    def generate(path, context)
-      rcontext = self
-      yaml = @yaml
-      theme = @yaml['theme'] || "indigo"
+  def initialize(contents, filename, yaml)
+    @contents = contents
+    @yaml = yaml
+    @filename = filename
+  end
 
-      context.empty_page path, "#{yaml['title'] || "_"}" do
-        request_css "css/#{theme}.css"
-        row do
-          col 9 do
-            h1 yaml['title']
-          end
-        end
+  def dirname
+    @filename.split('/')[0..-2].join('/')
+  end
 
-        rcontext.generate_contents(self)
-      end
+  def theme
+    @yaml['theme'] || "indigo"
+  end
 
-      context.empty_page "#{path}.src", "source of #{path}" do
-        request_css 'css/indigo.css'
-        row do
-          col 9 do
-              pre File.read(filename)
-          end
-        end
-      end
-    end
+  def pagetype
+    @yaml['type'] || 'manual'
+  end
 
-    def generate_contents(context)
-      contents = @contents
-  
-      blocks = []
-      superblocks = []
-  
-      contents.split(/\n\n+/).select {|x| x.length != 0}.each do |blk|
-        if blk.start_with?('#')
-          superblocks << blocks if blocks.length != 0
-          blocks = []
-  
-          blocks << Block.new(
-            type: :header,
-            lines: blk.split("\n")
-          )
-        elsif blk.start_with?('*note*')
-          superblocks << blocks[0..-2]
-          blocks = [blocks[-1]]
-  
-          blocks << Block.new(
-            type: :note,
-            lines: blk.split("\n")
-          )
-        elsif blk.start_with?(/\+(\-+\+)+/)
-          blocks << Block.new(
-            type: :table,
-            lines: blk.split("\n")
-          )
-        elsif blk.start_with?('- ')
-          blocks << Block.new(
-            type: :ul,
-            lines: blk.split("\n")
-          )
-        elsif blk.start_with?('--')
-          blocks << Block.new(
-            type: :hr,
-            lines: []
-          )
-        elsif blk.start_with?(/  [^ ]/)
-          blocks << Block.new(
-            type: :paragraph,
-            lines: blk.split("\n")
-          )
-        else
-          blocks << Block.new(
-            type: :ordinary,
-            lines: blk.split("\n")
-          )
-        end
-      end
-  
-      superblocks << blocks
-  
-      context.instance_exec do
-        
-        superblocks.each_with_index do |superblock, superindex|
-  
-          noteblock = []
-  
-          row do
-            col 12, lg: 8, md: 9 do
-              superblock.each_with_index do |block, index|
-                if block.type == :note
-                  noteblock << block
-                  next
-                end
-        
-                if block.type == :header
-                  div class: :pagebreak do end if superindex != 0 || index != 0
-                  h2 "#{block.lines.join('').sub(/^\# */, '')}"
-                elsif block.type == :paragraph
-                  p do
-                    block.generate(self)
-                  end
-                elsif block.type == :ul
-                  ul do
-                    block.lines.each do |line|
-                      li line.sub(/^- */, '')
-                    end
-                  end
-                elsif block.type == :table
-                  div class: "simpletable" do
-                    table do
-                      thead do
-                        block.lines[1].split('|').compact.each do |x|
-                          next if x.length == 0
-                          th x
-                        end
-                      end
-                      block.lines[2..-1].each do |line|
-                        if line.start_with?('|')
-                          tr do
-                            line.split('|').compact.each do |x|
-                              next if x.length == 0
-                              td x
-                            end
-                          end
-                        end
-                      end
-                    end
-                  end
-                elsif block.type == :hr
-                  hr
-                else
-                  div do
-                    block.generate(self)
-                  end
-                end
-  
-              end
-        
-            end
-  
-            col 12, lg: 3, md: 3 do
-              noteblock.each_with_index do |block, index|
-                blockquote block.lines[1..-1].join(' ')
-              end
-            end
-          end
-        end
-      end
+  def generate(path, context)
+    rcontext = self
+    yaml = @yaml
+    theme = self.theme
+    filename = @filename
+
+    context.empty_page path, "#{yaml['title'] || "_"}" do
+      request_css "css/#{theme}.css"
+      rcontext.generate_contents(self)
     end
   end
+
+  def generate_contents(context)
+    generator_class_name = "#{pagetype.camelize}PageGenerator"
+    genclass = Kernel.const_get(generator_class_name)
+    
+    cg = genclass.new(context, @contents, @yaml, @filename)
+    cg.generate!
+  end
+end
+
+
+
+class ContentGenerator
+  attr_accessor :contents, :yaml, :filename
+
+  def initialize(context, contents, yaml, filename)
+    @context = context
+    @contents = contents
+    @yaml = yaml
+    @filename = filename
+  end
+
+  def lines
+    @lines ||= @contents.split("\n")
+  end
+
+  def blocks
+    Blockifier.new(lines).blocks
+
+  end
+
+  def generate!
+    @context.text "empty content generator"
+  end
+end
+
+# block types
+# - single line "# " "- " "  - " "> " "> > "
+# - header block "----", "===="
+# - explicit block "```"
+# - implicit block
+class Blockifier
+  attr_reader :lines
+  def initialize(lines)
+    @lines = lines
+  end
+
+  SINGLE_LINE_BLOCKS = {
+    header: {
+      regex: %r{^(?<level>\#{1,3}) (?<text>.+)}
+    },
+    ul: {
+      regex: %r{^(?<level> *)- (?<text>.+)}
+    },
+    ol: {
+      regex: %r{^(?<level> *)[0-9]+\. (?<text>.+)}
+    },
+
+  }
+
+  def single_block_type(line)
+    SINGLE_LINE_BLOCKS.each do |typ, info|
+      m = info[:regex].match(line)
+      next if m.nil?
+
+      return {
+        type: typ,
+        tag: typ,
+        level: m[:level].length,
+        text: m[:text]
+      }
+    end
+
+    nil
+  end
+
+  def blocks
+    blocks = []
+
+    curblock = Block.new
+    lastline = nil
+
+    lines.each do |line|
+      sbt = single_block_type(line)
+
+      if curblock.type == :explicit
+        if line.start_with?('```')
+          blocks << curblock
+
+          curblock = Block.new
+
+        else
+          curblock.lines << line
+        end
+        next
+      end
+
+      if curblock.lines.length == 0 && !sbt.nil?
+        a = Block.new
+        a.lines << sbt[:text]
+        a.type = :single
+        a.tag = sbt[:tag].to_sym
+        a.level = sbt[:level]
+
+        blocks << a
+        next
+      end
+
+      if curblock.type == :implicit
+
+        lindent = 0
+        if line.start_with?(' ' * 4)
+          lindent = 1
+        end
+          
+        if line.start_with?('```')
+          if curblock.lines.length != 0
+            blocks << curblock
+          end
+          curblock = Block.new
+          curblock.type = :explicit
+          curblock.tag = :pre
+          next
+
+        # underline for header
+        elsif curblock.lines.length == 1 &&
+              (line.start_with?('--') || line.start_with?('==')) &&
+              line.length >= curblock.lines[0].length
+
+          if line.start_with?('==')
+            curblock.level = 1
+          else
+            curblock.level = 2
+          end
+          curblock.type = :single
+          curblock.tag = :header
+          blocks << curblock
+          curblock = Block.new
+
+        # horizontal line
+        elsif line.start_with?('--') && line.gsub(/-+/, '').length == 0
+          a = Block.new
+          a.type = :single
+          a.tag = :hr
+          blocks << a
+
+        else
+          # empty line
+          if line.gsub(/\s+/, '').length == 0
+            blocks << curblock
+            curblock = Block.new
+            next
+          end
+
+          if lindent != curblock.level
+            if curblock.lines.length != 0
+              blocks << curblock
+              curblock = Block.new
+            end
+            curblock.level = lindent
+          end
+
+          curblock.lines << line[lindent * 4..-1]
+        end
+      end
+
+      lastline = line
+    end
+    
+    if curblock.lines.length != 0
+      blocks << curblock
+    end
+
+    blocks
+  end
+end
+
+class Block
+  attr_accessor :type, :lines, :tag, :level
+  
+  def initialize
+    @lines = []
+    @type = :implicit
+    @tag = :div
+    @level = 0
+  end
+end
+
+class BlogPageGenerator < ContentGenerator
+
+  def generate!
+    b = blocks
+    @context.pre do
+      text "#{b.inspect}"
+    end
+  end
+end

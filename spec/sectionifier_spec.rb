@@ -18,7 +18,7 @@ describe Sectionifier do
     b1 = Block.new
     b2 = Block.new
     h1 = Block.new
-    h1.type = :header
+    h1.tag = :header
 
     blocks = [b1, b2, h1]
 
@@ -36,7 +36,7 @@ describe Sectionifier do
     b1 = Block.new
     b2 = Block.new
     h1 = Block.new
-    h1.type = :header
+    h1.tag = :header
     b3 = Block.new
     b4 = Block.new
 
@@ -58,13 +58,13 @@ describe Sectionifier do
     b1 = Block.new
 
     h1 = Block.new
-    h1.type = :header
+    h1.tag = :header
     h1.level = 1
     b2 = Block.new
     b3 = Block.new
 
     h2 = Block.new
-    h2.type = :header
+    h2.tag = :header
     h2.level = 2
     b4 = Block.new
     b5 = Block.new
@@ -97,19 +97,19 @@ describe Sectionifier do
     b1 = Block.new
 
     h1 = Block.new
-    h1.type = :header
+    h1.tag = :header
     h1.level = 1
     b2 = Block.new
     b3 = Block.new
 
     h2 = Block.new
-    h2.type = :header
+    h2.tag = :header
     h2.level = 2
     b4 = Block.new
     b5 = Block.new
 
     h12 = Block.new
-    h12.type = :header
+    h12.tag = :header
     h12.level = 1
     b6 = Block.new
     b7 = Block.new
@@ -255,7 +255,7 @@ describe Sectionifier do
     blocks = []
 
     h1 = Block.new
-    h1.type = :header
+    h1.tag = :header
 
     u01 = Block.new
     u01.tag = :ul

@@ -84,15 +84,8 @@ class Sectionifier
 
       # determine the current section type
       if cursection.type.nil?
-        if curblock.tag == :ol || curblock.tag == :ul
-          cursection.type = curblock.tag
-          cursection.listlevel = curblock.level
-          next
 
-        elsif curblock.type == :implicit
-          cursection.type = :para
-
-        elsif curblock.type == :header
+        if curblock.tag == :header
           cursection.type = :header
           cursection.headerlevel = curblock.level
 
@@ -106,8 +99,16 @@ class Sectionifier
           cursection.children << inner
           next
 
+        elsif curblock.tag == :ol || curblock.tag == :ul
+          cursection.type = curblock.tag
+          cursection.listlevel = curblock.level
+          next
+
+        elsif curblock.type == :implicit
+          cursection.type = :para
+
         else
-          raise "unknown block type #{curblock.type}"
+          cursection.type = curblock.type
         end
 
       elsif cursection.type == :ol || cursection.type == :ul
@@ -132,13 +133,21 @@ class Sectionifier
         end
 
       else
-        if curblock.type == :header
+        if curblock.tag == :header
           if cursection.type == :header && curblock.level > cursection.headerlevel
             inner = Section.new
             blocks = consume_block(blocks, inner)
             cursection.children << inner
             next
           end
+          break
+        end
+
+        if curblock.tag == :ol || curblock.tag == :ul
+          break
+        end
+
+        if curblock.type != :implicit
           break
         end
 
@@ -181,9 +190,15 @@ class Section
   end
 
   def display(context)
+    sect = self
     blocks = @blocks
     context.col 12 do
-      text "section #{blocks.length} #{blocks.map{|b| b.lines.inspect}.join('|')}"
+      text "section #{sect.type} #{blocks.length} #{blocks.map{|b| b.lines.inspect}.join('|')}"
+      blockquote do
+        sect.children.each do |s|
+          s.display(self)
+        end
+      end
     end
   end
 end

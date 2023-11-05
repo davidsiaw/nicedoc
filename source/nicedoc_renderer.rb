@@ -58,7 +58,10 @@ class ContentGenerator
 
   def blocks
     Blockifier.new(lines).blocks
+  end
 
+  def sections
+    Sectionifier.new(blocks).sections
   end
 
   def generate!
@@ -66,6 +69,127 @@ class ContentGenerator
   end
 end
 
+# Sectionifier
+# turns blocks into semantic sections
+class Sectionifier
+  def initialize(blocks)
+    @blocks = blocks
+  end
+
+  # return remaining blocks
+  def consume_block(blocks, cursection)
+    loop do
+      curblock = blocks.first
+      break if curblock.nil?
+
+      # determine the current section type
+      if cursection.type.nil?
+        if curblock.tag == :ol || curblock.tag == :ul
+          cursection.type = curblock.tag
+          cursection.listlevel = curblock.level
+          next
+
+        elsif curblock.type == :implicit
+          cursection.type = :para
+
+        elsif curblock.type == :header
+          cursection.type = :header
+          cursection.headerlevel = curblock.level
+
+          # pull in the header
+          cursection.blocks << curblock
+          blocks.shift
+
+          # continue with the rest
+          inner = Section.new
+          blocks = consume_block(blocks, inner)
+          cursection.children << inner
+          next
+
+        else
+          raise "unknown block type #{curblock.type}"
+        end
+
+      elsif cursection.type == :ol || cursection.type == :ul
+        break if curblock.tag != cursection.type
+        break if curblock.level < cursection.listlevel
+        
+        if curblock.level > cursection.listlevel
+          inner = Section.new
+          blocks = consume_block(blocks, inner)
+          cursection.children.last.children << inner
+          next
+
+        else
+          # equal
+          inner = Section.new
+          inner.type = :li
+
+          # pull in the header
+          inner.blocks << blocks.shift
+          cursection.children << inner
+          next
+        end
+
+      else
+        if curblock.type == :header
+          if cursection.type == :header && curblock.level > cursection.headerlevel
+            inner = Section.new
+            blocks = consume_block(blocks, inner)
+            cursection.children << inner
+            next
+          end
+          break
+        end
+
+      end
+
+      cursection.blocks << curblock
+
+      blocks.shift
+    end
+
+    blocks
+  end
+
+  def sections
+    @sections ||= begin
+      result = []
+  
+      remaining = @blocks.dup
+  
+      remaining.length.times do
+        cursection = Section.new
+        remaining = consume_block(remaining, cursection)
+        result << cursection
+        break if remaining.length.zero?
+      end
+      
+      result
+    end
+  end
+end
+
+class Section
+  attr_accessor :blocks, :children, :type, :headerlevel, :listlevel
+
+  def initialize
+    @blocks = []
+    @children = []
+    @headerlevel = 0
+    @listlevel = 0
+  end
+
+  def display(context)
+    blocks = @blocks
+    context.col 12 do
+      text "section #{blocks.length} #{blocks.map{|b| b.lines.inspect}.join('|')}"
+    end
+  end
+end
+
+# Blockifier
+# turns lines to blocks
 # block types
 # - single line "# " "- " "  - " "> " "> > "
 # - header block "----", "===="
@@ -198,7 +322,7 @@ class Blockifier
 
       lastline = line
     end
-    
+
     if curblock.lines.length != 0
       blocks << curblock
     end
@@ -207,23 +331,16 @@ class Blockifier
   end
 end
 
-class Block
-  attr_accessor :type, :lines, :tag, :level
-  
-  def initialize
-    @lines = []
-    @type = :implicit
-    @tag = :div
-    @level = 0
-  end
-end
 
 class BlogPageGenerator < ContentGenerator
 
   def generate!
-    b = blocks
-    @context.pre do
-      text "#{b.inspect}"
+    sections.each do |s|
+      @context.row do
+        s.display(self)
+      end
+      
     end
+
   end
 end

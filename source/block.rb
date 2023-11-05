@@ -1,24 +1,11 @@
+
 class Block
-    attr_reader :type, :lines
+  attr_accessor :type, :lines, :tag, :level
   
-    def initialize(type:, lines:)
-      @type = type
-      @lines = lines
-    end
-  
-    def spans
-      lines.map {|x| Span.new(x)}
-    end
-  
-    def generate(context)
-      spanlist = spans
-      spanlist.each do |span|
-        span.generate(context)
-      end
-    end
-  
-    def to_s
-      @lines.join(' ')
-    end
+  def initialize
+    @lines = []
+    @type = :implicit
+    @tag = :div
+    @level = 0
   end
-  
+end

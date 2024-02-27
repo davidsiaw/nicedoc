@@ -15,5 +15,6 @@ Dir["pages/**/*.nd"].each do |x|
   path.sub!(%r{/$}, '') if path.end_with? '/'
 
   disp_page x, path
+  disp_page x, path + '.debug', debug: true
   source_page x, path + '.src'
 end

@@ -1,7 +1,8 @@
 
 class Nicedoc
-  def initialize(filename)
+  def initialize(filename, debug: false)
     @filename = filename
+    @debug = debug
   end
 
   def contents
@@ -13,6 +14,6 @@ class Nicedoc
   end
 
   def renderer
-    NicedocRenderer.new(contents.split("---", 2).last, @filename, yaml)
+    NicedocRenderer.new(contents.split("---", 2).last, @filename, yaml, debug: @debug)
   end
 end

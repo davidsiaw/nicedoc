@@ -1,10 +1,11 @@
 require 'active_support/inflector'
 
 class NicedocRenderer
-  def initialize(contents, filename, yaml)
+  def initialize(contents, filename, yaml, debug: false)
     @contents = contents
     @yaml = yaml
     @filename = filename
+    @debug = debug
   end
 
   def dirname
@@ -31,25 +32,31 @@ class NicedocRenderer
     end
   end
 
+  def generator_class_name
+    "#{pagetype.camelize}PageGenerator"
+  end
+
+  def generator_class
+    Kernel.const_get(generator_class_name)
+  end
+
   def generate_contents(context)
-    generator_class_name = "#{pagetype.camelize}PageGenerator"
-    genclass = Kernel.const_get(generator_class_name)
-    
-    cg = genclass.new(context, @contents, @yaml, @filename)
+    cg = generator_class.new(context, @contents, @yaml, @filename)
+    cg.debug = @debug
     cg.generate!
   end
 end
 
 
-
 class ContentGenerator
-  attr_accessor :contents, :yaml, :filename
+  attr_accessor :contents, :yaml, :filename, :debug
 
   def initialize(context, contents, yaml, filename)
     @context = context
     @contents = contents
     @yaml = yaml
     @filename = filename
+    @debug = false
   end
 
   def lines
@@ -153,7 +160,9 @@ class Sectionifier
 
       end
 
-      cursection.blocks << curblock
+      if curblock.lines.length != 0
+        cursection.blocks << curblock
+      end
 
       blocks.shift
     end
@@ -189,17 +198,48 @@ class Section
     @listlevel = 0
   end
 
-  def display(context)
+  def display(context, debug:)
+    return display_debug(context) if debug
+
     sect = self
     blocks = @blocks
-    context.col 12 do
-      text "section #{sect.type} #{blocks.length} #{blocks.map{|b| b.lines.inspect}.join('|')}"
-      blockquote do
-        sect.children.each do |s|
-          s.display(self)
+
+  end
+
+  def display_debug(context)
+    sect = self
+    blocks = @blocks
+    context.row do
+      col 12 do
+        pre do
+          text "section\n"
+          text "type: #{sect.type}\n"
+          text "headerlevel: #{sect.headerlevel}\n"
+          text "listlevel: #{sect.listlevel}\n"
+          text "blocks #{blocks.length}\n"
+        end
+
+        blockquote do
+          blocks.each do |block|
+            pre do
+              text "type: #{block.type}\n"
+              text "level: #{block.level}\n"
+              text "lines: #{block.lines.count}\n"
+              block.lines.each do |line|
+                text "- #{line}\n"
+              end
+            end
+          end
+          
+          
+          #{blocks.map{|b| b.lines.inspect}.join('|')}"
+          sect.children.each do |s|
+            s.display(self, debug: true)
+          end
         end
       end
     end
+    
   end
 end
 
@@ -348,14 +388,9 @@ end
 
 
 class BlogPageGenerator < ContentGenerator
-
   def generate!
     sections.each do |s|
-      @context.row do
-        s.display(self)
-      end
-      
+      s.display(@context, debug: debug)
     end
-
   end
 end

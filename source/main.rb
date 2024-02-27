@@ -1,11 +1,10 @@
 require 'yaml'
 
-def disp_page(filename, path)
-  nd = Nicedoc.new(filename)
+def disp_page(filename, path, debug: false)
+  nd = Nicedoc.new(filename, debug: debug)
 
   nd.renderer.generate(path, self)
 end
-
 
 def source_page(filename, path)
   empty_page path, "source of #{filename}" do

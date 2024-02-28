@@ -1,9 +1,4 @@
-include 'nicedoc.rb'
-include 'nicedoc_renderer.rb'
-include "span.rb"
-include "block.rb"
 include "main.rb"
-include "util.rb"
 
 Util.instance.generate_css(:indigo)
 Util.instance.generate_css(:print)

@@ -1,5 +1,7 @@
 require 'yaml'
 
+require_relative 'nicedoc'
+
 def disp_page(filename, path, debug: false)
   nd = Nicedoc.new(filename, debug: debug)
 

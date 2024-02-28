@@ -25,11 +25,13 @@ seom code
 
 seom text
 
+
 - a1
 - b
 - c
   - c0
   - c1
+    - c1c
   - c2
 - d
 
@@ -40,3 +42,8 @@ stuff about b
 ## b subpart
 
 talk abut b subpart
+
+```specc
+specced block
+lalala
+```

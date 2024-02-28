@@ -78,6 +78,7 @@ class DebugPageGenerator < ContentGenerator
                   text "type: #{block.type}\n"
                   text "level: #{block.level}\n"
                   text "lines: #{block.lines.count}\n"
+                  text "info: #{block.info.to_yaml}\n"
                   block.lines.each do |line|
                     text "> #{line}\n"
                   end
@@ -99,7 +100,6 @@ end
 class BlogPageGenerator < ContentGenerator
   def generate!
     sections.each do |s|
-      s.display(@context, debug: debug)
     end
   end
 end

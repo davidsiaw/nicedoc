@@ -72,7 +72,6 @@ class Sectionifier
           break
         end
 
-
       elsif cursection.type == :para
 
         if curblock.tag == :header
@@ -82,10 +81,7 @@ class Sectionifier
           blocks = consume_block(blocks, inner)
           cursection.children << inner
           next
-        end
-
-        if curblock.type != :implicit
-          break
+          
         end
 
       else

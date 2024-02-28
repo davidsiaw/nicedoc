@@ -1,5 +1,24 @@
 include "main.rb"
 
+include "content_generator.rb"
+include "content_generators/blog_page_generator.rb"
+include 'nicedoc.rb'
+include 'nicedoc_renderer.rb'
+include "span.rb"
+include "block.rb"
+include "line_handlers/code_block_handler.rb"
+include "line_handlers/empty_line_handler.rb"
+include "line_handlers/explicit_block_handler.rb"
+include "line_handlers/header_underline_handler.rb"
+include "line_handlers/horizontal_line_handler.rb"
+include "line_handlers/indented_line_handler.rb"
+include "line_handlers/single_line_block_handler.rb"
+include "blockifier.rb"
+include "section.rb"
+include "sectionifier.rb"
+include "util.rb"
+
+
 Util.instance.generate_css(:indigo)
 Util.instance.generate_css(:print)
 

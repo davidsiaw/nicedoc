@@ -1,2 +1,6 @@
 require_relative '../source/block'
+require_relative '../source/content_generator'
 require_relative '../source/nicedoc_renderer'
+require_relative '../source/blockifier'
+require_relative '../source/section'
+require_relative '../source/sectionifier'

@@ -1,6 +1,9 @@
 title: Home page
 type: blog
 ---
+
+pre header
+
 # This is the life
 
 some stuff
@@ -8,12 +11,19 @@ maybe more
 
 paragraph 2 haha
 
+    indented text 1
+    indented text 2
+        more indented text 
+         more indented text 2
+
 haha
 ----
 
 ```
 seom code
 ```
+
+seom text
 
 - a1
 - b
@@ -24,3 +34,9 @@ seom code
 - d
 
 # b
+
+stuff about b
+
+## b subpart
+
+talk abut b subpart

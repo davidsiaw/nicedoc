@@ -1,12 +1,11 @@
 class ContentGenerator
-  attr_accessor :contents, :yaml, :filename, :debug
+  attr_accessor :contents, :yaml, :filename
 
   def initialize(context, contents, yaml, filename)
     @context = context
     @contents = contents
     @yaml = yaml
     @filename = filename
-    @debug = false
   end
 
   def lines

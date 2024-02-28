@@ -33,14 +33,12 @@ class Sectionifier
           cursection.listlevel = curblock.level
           next
 
-        elsif curblock.type == :implicit
-          cursection.type = :para
-
         else
-          cursection.type = curblock.type
+          cursection.type = :para
         end
 
       elsif cursection.type == :ol || cursection.type == :ul
+        # handling for lists
         break if curblock.tag != cursection.type
         break if curblock.level < cursection.listlevel
         
@@ -61,7 +59,9 @@ class Sectionifier
           next
         end
 
-      else
+      elsif cursection.type == :header
+        # handling for header
+
         if curblock.tag == :header
           if cursection.type == :header && curblock.level > cursection.headerlevel
             inner = Section.new
@@ -72,19 +72,28 @@ class Sectionifier
           break
         end
 
-        if curblock.tag == :ol || curblock.tag == :ul
+
+      elsif cursection.type == :para
+
+        if curblock.tag == :header
           break
+        elsif curblock.tag == :ol || curblock.tag == :ul
+          inner = Section.new
+          blocks = consume_block(blocks, inner)
+          cursection.children << inner
+          next
         end
 
         if curblock.type != :implicit
           break
         end
 
+      else
+        raise "unhandled section type: #{cursection.type}"
+
       end
 
-      if curblock.lines.length != 0
-        cursection.blocks << curblock
-      end
+      cursection.blocks << curblock
 
       blocks.shift
     end

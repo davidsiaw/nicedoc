@@ -1,13 +1,19 @@
 title: Home page
 type: blog
 ---
-
 pre header
 
-# This is the life
+# Header 1 *bold*
 
-some stuff
-maybe more
+stuff under header 1 *bold*
+
+## Header 2
+
+stuff under header 2
+
+### Header 3
+
+stuff under header 3
 
 paragraph 2 haha
 
@@ -15,6 +21,14 @@ paragraph 2 haha
     indented text 2
         more indented text 
          more indented text 2
+
+styling
+
+*bold*
+/italics/
+_underline_
+--strikeout--
+^overline^
 
 haha
 ----
@@ -34,6 +48,21 @@ seom text
     - c1c
   - c2
 - d
+
+- e
+- ordered
+  1. one
+   - dda
+  2. two
+   - awdwd
+
+stuff after ul
+
+
+
+1. hellp
+2. wper
+
 
 # b
 

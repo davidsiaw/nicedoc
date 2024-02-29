@@ -17,8 +17,6 @@ def source_page(filename, path)
   end
 end
 
-
-
   # empty_page path, "My first weaver page" do
 
   #   request_css 'css/main.css'

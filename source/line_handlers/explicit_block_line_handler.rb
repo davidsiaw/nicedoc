@@ -1,5 +1,5 @@
 # - explicit block "```"
-class ExplicitBlockHandler
+class ExplicitBlockLineHandler
   def handle(line, blocks, curblock)
     return curblock, :notconsumed unless curblock.type == :explicit
 

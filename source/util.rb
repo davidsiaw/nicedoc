@@ -72,6 +72,8 @@ class Util
             font-family: '#{fonts[:faces][sym]}';
             font-size: #{fonts[:sizes][sym]}#{fonts[:unit]};
             font-weight: #{fonts[:weights][sym]};
+            margin-top: 20px;
+            margin-bottom: 10px;
           }
         CSS
       end.join("\n")
@@ -310,6 +312,17 @@ class Util
       }
       .simpletable .pagination {
         display: none;
+      }
+
+
+      .ibox-title {
+        background-color: hsla(232,15%,31%,1);
+        border-color: hsla(232,15%,31%,1);
+      }
+
+      .ibox-content {
+        background-color: hsla(232,15%,25%,1);
+        border-color: hsla(232,15%,25%,1);
       }
 
 

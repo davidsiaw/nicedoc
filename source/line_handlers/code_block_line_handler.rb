@@ -1,4 +1,4 @@
-class CodeBlockHandler
+class CodeBlockLineHandler
   REGEX = /```(?<stuff>.+)/
 
   def handle(line, blocks, curblock)

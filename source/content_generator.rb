@@ -23,4 +23,8 @@ class ContentGenerator
   def generate!
     @context.text "empty content generator"
   end
+  
+  def flatlist
+    @flatlist ||= FlatSectionList.new(sections).flatlist
+  end
 end

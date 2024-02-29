@@ -1,5 +1,5 @@
 # - single line "# " "- " "  - " "> " "> > "
-class SingleLineBlockHandler
+class SingleLineHandler
   SINGLE_LINE_BLOCKS = {
     header: {
       regex: %r{^(?<level>\#{1,3}) (?<text>.+)}

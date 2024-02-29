@@ -28,10 +28,10 @@ class Sectionifier
           cursection.children << inner
           next
 
-        elsif curblock.tag == :ol || curblock.tag == :ul
-          cursection.type = curblock.tag
-          cursection.listlevel = curblock.level
-          next
+        # elsif curblock.tag == :ol || curblock.tag == :ul
+        #   cursection.type = curblock.tag
+        #   cursection.listlevel = curblock.level
+        #   next
 
         else
           cursection.type = :para
@@ -76,11 +76,11 @@ class Sectionifier
 
         if curblock.tag == :header
           break
-        elsif curblock.tag == :ol || curblock.tag == :ul
-          inner = Section.new
-          blocks = consume_block(blocks, inner)
-          cursection.children << inner
-          next
+        # elsif curblock.tag == :ol || curblock.tag == :ul
+        #   inner = Section.new
+        #   blocks = consume_block(blocks, inner)
+        #   cursection.children << inner
+        #   next
           
         end
 

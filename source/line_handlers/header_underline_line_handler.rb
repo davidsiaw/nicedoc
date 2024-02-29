@@ -1,5 +1,5 @@
 # - header block "----", "===="
-class HeaderUnderlineHandler
+class HeaderUnderlineLineHandler
   def handle(line, blocks, curblock)
     return curblock, :notconsumed unless curblock.type == :implicit
     return curblock, :notconsumed unless curblock.lines.length == 1

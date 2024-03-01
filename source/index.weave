@@ -11,6 +11,7 @@ include 'nicedoc_renderer.rb'
 include "span.rb"
 include "block.rb"
 include "blockifier.rb"
+include "flat_section_list.rb"
 include "section.rb"
 include "sectionifier.rb"
 include "util.rb"

@@ -110,46 +110,48 @@ describe Blockifier do
     expect(obj.blocks[0].lines[0]).to eq '3rd header'
   end
 
-  it "creates ordered list single" do
+  it "creates a list block from ordered list" do
     obj = described_class.new(["1. hello"])
 
     expect(obj.blocks.length).to eq 1
     
-    expect(obj.blocks[0].type).to eq :single
+    expect(obj.blocks[0].type).to eq :list
     expect(obj.blocks[0].tag).to eq :ol
     expect(obj.blocks[0].level).to eq 0
-    expect(obj.blocks[0].lines.length).to eq 1
-    expect(obj.blocks[0].lines[0]).to eq 'hello'
+    expect(obj.blocks[0].lines.length).to eq 0
+    expect(obj.blocks[0].info[:tags][0][:type]).to eq :branch
+    expect(obj.blocks[0].info[:tags][1][:type]).to eq :leaf
+    expect(obj.blocks[0].info[:tags][1][:text]).to eq 'hello'
   end
 
-  it "creates unordered list single" do
+  it "creates a list block from unordered list" do
     obj = described_class.new(["- world"])
 
     expect(obj.blocks.length).to eq 1
     
-    expect(obj.blocks[0].type).to eq :single
+    expect(obj.blocks[0].type).to eq :list
     expect(obj.blocks[0].tag).to eq :ul
     expect(obj.blocks[0].level).to eq 0
-    expect(obj.blocks[0].lines.length).to eq 1
-    expect(obj.blocks[0].lines[0]).to eq 'world'
+    expect(obj.blocks[0].lines.length).to eq 0
+    expect(obj.blocks[0].info[:tags][0][:type]).to eq :branch
+    expect(obj.blocks[0].info[:tags][1][:type]).to eq :leaf
+    expect(obj.blocks[0].info[:tags][1][:text]).to eq 'world'
   end
 
-  it "creates multiple unordered list singles" do
+  it "creates one list block from multiple unordered list lines" do
     obj = described_class.new(["- a", "- b"])
 
-    expect(obj.blocks.length).to eq 2
+    expect(obj.blocks.length).to eq 1
     
-    expect(obj.blocks[0].type).to eq :single
+    expect(obj.blocks[0].type).to eq :list
     expect(obj.blocks[0].tag).to eq :ul
     expect(obj.blocks[0].level).to eq 0
-    expect(obj.blocks[0].lines.length).to eq 1
-    expect(obj.blocks[0].lines[0]).to eq 'a'
-
-    expect(obj.blocks[1].type).to eq :single
-    expect(obj.blocks[1].tag).to eq :ul
-    expect(obj.blocks[0].level).to eq 0
-    expect(obj.blocks[1].lines.length).to eq 1
-    expect(obj.blocks[1].lines[0]).to eq 'b'
+    expect(obj.blocks[0].lines.length).to eq 0
+    expect(obj.blocks[0].info[:tags][0][:type]).to eq :branch
+    expect(obj.blocks[0].info[:tags][1][:type]).to eq :leaf
+    expect(obj.blocks[0].info[:tags][1][:text]).to eq 'a'
+    expect(obj.blocks[0].info[:tags][2][:type]).to eq :leaf
+    expect(obj.blocks[0].info[:tags][2][:text]).to eq 'b'
   end
 
   it "creates unordered list indented" do
@@ -157,11 +159,16 @@ describe Blockifier do
 
     expect(obj.blocks.length).to eq 1
     
-    expect(obj.blocks[0].type).to eq :single
+    expect(obj.blocks[0].type).to eq :list
     expect(obj.blocks[0].tag).to eq :ul
-    expect(obj.blocks[0].level).to eq 1
-    expect(obj.blocks[0].lines.length).to eq 1
-    expect(obj.blocks[0].lines[0]).to eq 'indented'
+    expect(obj.blocks[0].level).to eq 0
+    expect(obj.blocks[0].lines.length).to eq 0
+
+    expect(obj.blocks[0].info[:tags].length).to eq 2
+
+    expect(obj.blocks[0].info[:tags][0][:type]).to eq :branch
+    expect(obj.blocks[0].info[:tags][1][:type]).to eq :leaf
+    expect(obj.blocks[0].info[:tags][1][:text]).to eq 'indented'
   end
 
 
@@ -169,6 +176,7 @@ describe Blockifier do
     obj = described_class.new(["abc", "", "---"])
 
     expect(obj.blocks.length).to eq 2
+
     expect(obj.blocks[0].type).to eq :implicit
     expect(obj.blocks[0].tag).to eq :div
     expect(obj.blocks[0].lines.length).to eq 1

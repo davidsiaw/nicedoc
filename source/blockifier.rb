@@ -8,12 +8,12 @@ class Blockifier
 
   def handler_list
     @handler_list ||= [
+      HeaderUnderlineLineHandler.new,
+      HorizontalLineHandler.new,
       ExplicitBlockLineHandler.new,
       ListLineHandler.new,
       SingleLineHandler.new,
       CodeBlockLineHandler.new,
-      HeaderUnderlineLineHandler.new,
-      HorizontalLineHandler.new,
       EmptyLineHandler.new,
       IndentedLineHandler.new
     ]

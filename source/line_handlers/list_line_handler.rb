@@ -11,13 +11,14 @@ class ListLineHandler < SingleLineHandler
 
     a = Block.new
     a.type = :list
+    a.tag = sbt[:tag]
     a.info = {
       tags: []
     }
 
     a.info[:last] = a.info[:tags].first
 
-    if blocks.last.type == :list
+    if blocks.last&.type == :list
       a = blocks.last
     else
       blocks << a

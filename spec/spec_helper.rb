@@ -11,6 +11,7 @@ Dir["source/block_handlers/*.rb"].each { |x| require_relative "../#{x}" }
 
 Dir["source/line_handlers/*.rb"].reverse.each { |x| require_relative "../#{x}" }
 
+require_relative '../source/line_parser'
 require_relative '../source/block'
 require_relative '../source/blockifier'
 require_relative '../source/nicedoc_renderer'

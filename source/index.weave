@@ -9,6 +9,7 @@ Dir["line_handlers/*.rb"].each { |x| include x }
 include 'nicedoc.rb'
 include 'nicedoc_renderer.rb'
 include "span.rb"
+include "line_parser.rb"
 include "block.rb"
 include "blockifier.rb"
 include "flat_section_list.rb"

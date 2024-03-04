@@ -1,10 +1,14 @@
 include "main.rb"
 
 include "content_generator.rb"
-Dir["content_generators/*.rb"].each { |x| include x }
-Dir["section_handlers/*.rb"].each { |x| include x }
-Dir["block_handlers/*.rb"].each { |x| include x }
-Dir["line_handlers/*.rb"].each { |x| include x }
+Dir["source/content_generators/*.rb"].each { |x| include "../#{x}" }
+
+include "section_handler.rb"
+Dir["source/section_handlers/*.rb"].each { |x| include "../#{x}" }
+
+include "block_handler.rb"
+Dir["source/block_handlers/*.rb"].each { |x| include "../#{x}" }
+Dir["source/line_handlers/*.rb"].each { |x| include "../#{x}" }
 
 include 'nicedoc.rb'
 include 'nicedoc_renderer.rb'
@@ -16,7 +20,6 @@ include "flat_section_list.rb"
 include "section.rb"
 include "sectionifier.rb"
 include "util.rb"
-
 
 Util.instance.generate_css(:indigo)
 Util.instance.generate_css(:print)

@@ -1,0 +1,7 @@
+.bash_history
+.bundle/
+.bundler/
+.cmdsh
+.gitconfig
+css/indigo.css
+css/print.css

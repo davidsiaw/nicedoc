@@ -94,13 +94,32 @@ class Util
   
       @font-face {
         font-family: 'Overpass';
-        src:  url('overpass-light.ttf') format('truetype')
+        src:  url('overpass-extralight.ttf') format('truetype');
+        font-weight: 100 200;
+      }
+
+      @font-face {
+        font-family: 'Overpass';
+        src:  url('overpass-regular.ttf') format('truetype');
+        font-weight: 300 400;
       }
 
       @font-face {
         font-family: 'Overpass';
         src:  url('overpass-bold.ttf') format('truetype');
-        font-weight: bold;
+        font-weight: 500 600;
+      }
+
+      @font-face {
+        font-family: 'Overpass';
+        src:  url('overpass-heavy.ttf') format('truetype');
+        font-weight: 700 800;
+      }
+
+      @font-face {
+        font-family: 'Overpass';
+        src:  url('overpass-heavy.ttf') format('truetype');
+        font-weight: 900 900;
       }
 
       @font-face {
@@ -156,7 +175,7 @@ class Util
 
 
         font-size: #{fonts[:sizes][:p]}#{fonts[:unit]};
-        font-weight: 200;
+        font-weight: 100;
       }
   
       body:not(.mini-navbar) {
@@ -286,16 +305,49 @@ class Util
         font-weight: 600;
         font-family: FiraCode;
       }
-  
-      .italics {
+
+      .span-italics {
         font-style: italic;
       }
   
+      .span-bold {
+        font-weight: 600;
+      }
+
+      .span-verybold {
+        font-weight: 900;
+      }
+
+      .span-superbold {
+        font-weight: 900;
+        color: #ff1e1e;
+      }
+
+      .span-underline {
+        text-decoration: underline;
+      }
+
+      .span-strikethrough {
+        text-decoration: line-through;
+      }
+
+      .span-overline {
+        text-decoration: overline;
+      }
+
+      .span-code {
+        font-size: 0.9em;
+        font-weight: bold;
+        font-family: FiraCode;
+        border: 3px solid hsla(232,15%,15%,1);
+        border-radius: 5px;
+        background-color: hsla(232,15%,15%,1);
+      }
+
       .btn-primary {
         background-color: #000;
         border-color: #000;
       }
-
 
       .simpletable .table {
         width: auto;

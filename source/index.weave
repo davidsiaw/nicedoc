@@ -13,7 +13,11 @@ Dir["source/line_handlers/*.rb"].sort.reverse.each { |x| include "../#{x}" }
 include 'nicedoc.rb'
 include 'nicedoc_renderer.rb'
 include "span.rb"
+include "state_machine.rb"
+include "parser_builder.rb"
+include "parser_walker.rb"
 include "line_parser.rb"
+include "line_renderer.rb"
 include "block.rb"
 include "blockifier.rb"
 include "flat_section_list.rb"

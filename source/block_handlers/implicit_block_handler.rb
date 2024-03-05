@@ -2,9 +2,8 @@ class ImplicitBlockHandler < BlockHandler
   def handle(block, handlerstate, context)
     return false unless block.type == :implicit
 
-    block.lines.each do |line|
-      context.div "#{line}\n"
-    end
+    lr = LineRenderer.new(block.parse)
+    lr.render(context)
 
     true
   end

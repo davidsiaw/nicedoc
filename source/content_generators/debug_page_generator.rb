@@ -48,4 +48,3 @@ class DebugPageGenerator < ContentGenerator
     end
   end
 end
-

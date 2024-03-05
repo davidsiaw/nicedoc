@@ -8,7 +8,7 @@ Dir["source/section_handlers/*.rb"].each { |x| include "../#{x}" }
 
 include "block_handler.rb"
 Dir["source/block_handlers/*.rb"].each { |x| include "../#{x}" }
-Dir["source/line_handlers/*.rb"].each { |x| include "../#{x}" }
+Dir["source/line_handlers/*.rb"].sort.reverse.each { |x| include "../#{x}" }
 
 include 'nicedoc.rb'
 include 'nicedoc_renderer.rb'

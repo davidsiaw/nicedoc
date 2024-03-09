@@ -12,10 +12,12 @@ class Blockifier
       HorizontalLineHandler.new,
       ExplicitBlockLineHandler.new,
       ListLineHandler.new,
+      ListSubtextLineHandler.new,
       SingleLineHandler.new,
       CodeBlockLineHandler.new,
       EmptyLineHandler.new,
-      IndentedLineHandler.new
+      IndentedLineHandler.new,
+      ImplicitLineHandler.new
     ]
   end
 
@@ -23,8 +25,6 @@ class Blockifier
     blocks = []
 
     curblock = Block.new
-    lastline = nil
-
     lines.each do |line|
 
       consumed = false
@@ -38,8 +38,6 @@ class Blockifier
       end
 
       raise "unconsumed line: #{line}" if consumed == false
-
-      lastline = line
     end
 
     if curblock.lines.length != 0

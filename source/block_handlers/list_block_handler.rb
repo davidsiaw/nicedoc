@@ -27,7 +27,11 @@ class ListBlockHandler < BlockHandler
         if child[:type] == :branch
           this.write_list(info, child, self)
         else
-          li child[:text]
+          li do
+            child[:text].each do |textline|
+              div textline
+            end
+          end
         end
 
       end

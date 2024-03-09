@@ -165,4 +165,15 @@ describe LineParser do
       }
     ])
   end
+
+  it "parses compound directly" do
+    lp = described_class.new('_**doubled**_')
+
+    expect(lp.tree[:array]).to eq([
+      {
+        styles: [:underline, :verybold],
+        text: 'doubled'
+      }
+    ])
+  end
 end

@@ -5,15 +5,12 @@ class LineRenderer
 
   def render(context)
     @parse.each do |arr|
-      typ = :div
 
-      if ((arr || {})[:array]&.first || {})[:text]&.start_with?('  ')
-        typ = :p
-      end
-
-      context.send(typ) do
-        arr[:array].each do |arspan|
-          span arspan[:text], class: arspan[:styles].map{|x| "span-#{x}"}.join(' ')
+      arr[:array].each do |arspan|
+        if arspan[:styles].length == 0
+          context.text arspan[:text]
+        else
+          context.span arspan[:text], class: arspan[:styles].map{|x| "span-#{x}"}.join(' ')
         end
       end
     end

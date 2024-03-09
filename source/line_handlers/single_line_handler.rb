@@ -31,15 +31,17 @@ class SingleLineHandler
   def handle(line, blocks, curblock)
     sbt = single_block_type(line)
 
-    return curblock, :notconsumed unless curblock.lines.length == 0 && !sbt.nil?
+    return curblock, :notconsumed if sbt.nil?
 
-    a = Block.new
-    a.lines << sbt[:text]
-    a.type = :single
-    a.tag = sbt[:tag].to_sym
-    a.level = sbt[:level]
+    if curblock.lines.length == 0
+      blocks << curblock
+      curblock = Block.new
+    end
 
-    blocks << a
+    curblock.lines << sbt[:text]
+    curblock.type = :single
+    curblock.tag = sbt[:tag].to_sym
+    curblock.level = sbt[:level]
 
     return curblock, :consumed
   end

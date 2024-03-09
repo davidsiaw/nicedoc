@@ -46,6 +46,11 @@ class StateMachine
       return_value = :open
     end
 
+    if !@state_table.key?(transition_key)
+      @current_state = nil
+      return_value = :close
+    end
+
     @current_state = @state_table["#{@current_state},#{transition}"]
 
     return return_value

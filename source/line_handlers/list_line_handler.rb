@@ -1,6 +1,3 @@
-class Listbuilder
-end
-
 class ListLineHandler < SingleLineHandler
   def handle(line, blocks, curblock)
     sbt = single_block_type(line)
@@ -75,7 +72,7 @@ class ListLineHandler < SingleLineHandler
     new_leaf = {
       type: :leaf,
       parent: a.info[:last],
-      text: sbt[:text]
+      text: [sbt[:text]]
     }
 
     pos = a.info[:tags].length

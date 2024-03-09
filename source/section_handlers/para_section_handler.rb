@@ -5,6 +5,7 @@ class ParaSectionHandler < SectionHandler
       SingleBlockHandler.new,
       ExplicitBlockHandler.new,
       ImplicitBlockHandler.new,
+      IndentedBlockHandler.new,
       BreakBlockHandler.new,
       EmptyBlockHandler.new
     ]

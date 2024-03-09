@@ -13,6 +13,6 @@ class Nicedoc
   end
 
   def renderer
-    NicedocRenderer.new(contents.split("---", 2).last, @filename, yaml, debug: @debug)
+    NicedocRenderer.new(contents.split("\n---\n", 2).last, @filename, yaml, debug: @debug)
   end
 end

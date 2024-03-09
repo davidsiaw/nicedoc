@@ -141,18 +141,19 @@ class Util
       @font-face {
         font-family: 'LinLibertine';
         src:  url('LinLibertine_aDRS.ttf') format('truetype')
+        font-weight: 300 500;
       }
   
       @font-face {
         font-family: 'LinLibertine';
-        src:  url('LinLibertine_RI.ttf') format('truetype');
+        src:  url('LinLibertine_RBI.ttf') format('truetype');
         font-style: italic;
       }
   
       @font-face {
         font-family: 'LinLibertine';
         src:  url('LinLibertine_RB.ttf') format('truetype');
-        font-weight: bold;
+        font-weight: 600 800;
       }
   
       @font-face {
@@ -332,11 +333,11 @@ class Util
       }
 
       .span-overline {
-        text-decoration: overline;
+        border-top: 1px solid hsla(232,15%,95%,1);
       }
 
       .span-code {
-        font-size: 0.9em;
+        font-size: 1.25rem;
         font-weight: bold;
         font-family: FiraCode;
         border: 3px solid hsla(232,15%,15%,1);

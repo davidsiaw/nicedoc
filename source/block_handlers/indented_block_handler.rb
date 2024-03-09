@@ -1,10 +1,10 @@
-class ImplicitBlockHandler < BlockHandler
+class IndentedBlockHandler < BlockHandler
   def handle(block, handlerstate, context)
-    return false unless block.type == :implicit
+    return false unless block.type == :indented
 
     lr = LineRenderer.new(block.parse)
 
-    context.send(block.tag) do
+    context.send(:pre) do
       lr.render(self)
     end
 

@@ -1,19 +1,29 @@
 # - explicit block "```"
 class ExplicitBlockLineHandler
   def handle(line, blocks, curblock)
-    return curblock, :notconsumed unless curblock.type == :explicit
-
     if line.start_with?('```')
-      if curblock.lines.length != 0
+      if curblock.type == :explicit
+        #end
         blocks << curblock
+        curblock = Block.new
+
+      else
+        #start
+        if curblock.lines.length != 0
+          blocks << curblock
+          curblock = Block.new
+        end
+        
+        curblock.type = :explicit
       end
 
-      curblock = Block.new
+      return curblock, :consumed
 
-    else
+    elsif curblock.type == :explicit
       curblock.lines << line
+      return curblock, :consumed
     end
-    
-    return curblock, :consumed
+
+    return curblock, :notconsumed
   end
 end

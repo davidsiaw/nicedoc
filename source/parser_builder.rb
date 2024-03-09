@@ -10,9 +10,10 @@ class ParserBuilder
        underline: { front: "_",   back: "_" },
    strikethrough: { front: "--",  back: "--" },
         overline: { front: "^",   back: "^" },
-            link: { front: "[",   back: "]" },
+          square: { front: "[",   back: "]" },
+          parens: { front: "(",   back: ")" },
             code: { front: "`",   back: "`" },
-            math: { front: "[(",  back: ")]" },
+        sqparens: { front: "[(",  back: ")]" },
   }
 
   def build!

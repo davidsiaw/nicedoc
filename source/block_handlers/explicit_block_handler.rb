@@ -1,4 +1,4 @@
-class ExplicitBlockHandler < BlockHandler
+class ExplicitBlockHandler
   def handle(block, handlerstate, context)
     return false unless block.type == :explicit
 

@@ -13,13 +13,18 @@ type: blog
 2. NiceDoc avoids falling back to HTML. Most Markdown-like syntax allow falling back to HTML automatically. While NiceDoc is also based on HTML, it tries not to burden the user with HTML semantics. Rather than let the user force some HTML behavior that makes no sense, we try to make sense as much as possible.
 3. NiceDoc aims to be mostly compatible with Markdown. Most often-used features of Markdown are supported in similar ways so existing Markdown-based documents can simply be moved to NiceDoc with minimal modification and will continue to work as they always have. The user then has the option to use NiceDoc-specific syntax to improve the reading experience.
 4. When you do want to display more information that cannot be shown in text-mode, or it is unclear how your document is interpreted, NiceDoc then provides facilities to demonstrate how it has interpreted your document.
+5. Allow people to write in a wide variety of content in text and have it be interpreted into an even clearer form in graphical mode.
 
 ## Links
 
 - [What is wrong with markdown?](whats-wrong-with-md)
 - [Examples]
 
+# Math
 
+this sentence has some math in it [[ dV/dt + a ]]
+
+# Other stuff
 
 pre header
 
@@ -58,7 +63,10 @@ _underline_
 ^overline^
 `code`
 _stragne_ things _hahaha/lolo_lolol/ some code here `make love`
+[[link]]
 
+- *bold*
+- **vbold**
 
 
 normal line
@@ -82,7 +90,6 @@ seom code
 
 seom text
 
-
 - a1
 - b
 - c
@@ -92,7 +99,6 @@ seom text
       subtext of c1c
   - c2
 - d
-
 - e
 - ordered
   1. one
@@ -107,6 +113,7 @@ stuff after ul
 1. hellp
 2. wper
 
+mo
 
 # b
 

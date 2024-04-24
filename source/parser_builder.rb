@@ -13,6 +13,7 @@ class ParserBuilder
           square: { front: "[",   back: "]" },
           parens: { front: "(",   back: ")" },
             code: { front: "`",   back: "`" },
+       dblsquare: { front: "[[",  back: "]]" },
         sqparens: { front: "[(",  back: ")]" },
   }
 

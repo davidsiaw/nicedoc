@@ -20,9 +20,6 @@ class ImplicitLineHandler
       curblock.lines << line
     end
 
-
-
-
     return curblock, :consumed
   end
 end

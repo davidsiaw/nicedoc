@@ -312,16 +312,16 @@ class Util
       }
   
       .span-bold {
-        font-weight: 600;
+        font-weight: 300;
       }
 
       .span-verybold {
-        font-weight: 900;
+        font-weight: 600;
       }
 
       .span-superbold {
         font-weight: 900;
-        color: #ff1e1e;
+/*        color: #ff1e1e;*/
       }
 
       .span-underline {

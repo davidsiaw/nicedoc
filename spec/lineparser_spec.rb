@@ -176,4 +176,9 @@ describe LineParser do
       }
     ])
   end
+
+  it "does not absorb others if inside exclusive" do
+    lp = described_class.new('[[excl]]')
+
+  end
 end

@@ -10,8 +10,21 @@ class Block
   end
 
   def parse
+    if type == :list
+      info[:tags].map do |tag|
+        thing = { **tag }
+        if tag[:text]
+          thing[:parse] = tag[:text]&.map{ |line| LineParser.new(line).tree }
+        end
+        thing
+
+      end
+    else
+      lineparse
+    end
+  end
+
+  def lineparse
     @lines.map { |line| LineParser.new(line).tree }
-    
   end
 end
-

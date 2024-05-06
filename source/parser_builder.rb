@@ -12,8 +12,8 @@ class ParserBuilder
         overline: { front: "^",   back: "^" },
           square: { front: "[",   back: "]" },
           parens: { front: "(",   back: ")" },
-            code: { front: "`",   back: "`" },
-       dblsquare: { front: "[[",  back: "]]" },
+            code: { front: "`",   back: "`", exclusive: true },
+       dblsquare: { front: "[[",  back: "]]", exclusive: true },
         sqparens: { front: "[(",  back: ")]" },
   }
 

@@ -8,29 +8,34 @@ class ListBlockHandler < BlockHandler
   def handle(block, handlerstate, context)
     return false unless block.type == :list
 
-    block.info[:tags].each do |tag|
+    block.parse.each do |tag|
       next unless tag[:parent].nil?
 
-      write_list(block.info, tag, context)
+      write_list(block, tag, context)
     end
 
     true
   end
 
-  def write_list(info, tag, context)
+  def write_list(block, tag, context)
     this = self
     context.send(tag[:tag]) do
 
       tag[:children].each do |child_idx|
-        child = info[:tags][child_idx]
+        child = block.parse[child_idx]
 
         if child[:type] == :branch
-          this.write_list(info, child, self)
+          this.write_list(block, child, self)
         else
           li do
-            child[:text].each do |textline|
-              div textline
-            end
+            lr = LineRenderer.new(child[:parse], override: :div)
+
+            lr.render(self)
+
+            # child[:text].each do |textline|
+
+            #   div textline
+            # end
           end
         end
 

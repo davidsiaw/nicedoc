@@ -72,16 +72,25 @@ class ParserWalker
       openpos = 0
       lastopenpos = 0
 
+      # we step through each character
       (@text.split('') + ["end"]).each_with_index do |chr,pos|
         res = sm.transition(chr)
 
+        inside_exclusive = active_tags.any? { |k,v| ParserBuilder::SPAN_TYPES[k][:exclusive] }
+
+        # if we are inside an exclusive tag, we consider all transitions normal
+        # and disable the state machine temporarily until the result is the end
+        # of the exclusive tag
+
         curblock += chr if chr != 'end'
 
+        # this result is the opening of a span
         if res == :open
           lastopenpos = openpos
           openpos = pos - 1
         end
 
+        # this result is the closing of a span
         if res == :close
           tag_list = parser_builder.state_tag_table[sm.previous_state]
 
@@ -95,7 +104,10 @@ class ParserWalker
 
               elsif !active_tags.key?(tag) && taginfo.include?(:start)
                 curblock = curblock[-1]
-                active_tags[tag] = pos
+
+                if !inside_exclusive
+                  active_tags[tag] = pos
+                end
 
               end
 

@@ -30,22 +30,28 @@ class StateMachine
 
     transition_key = "#{@current_state},#{transition}"
 
+    # whenever we see an unknown transition, we define it as a normal character
     if !transitions.include?(transition)
 
       if @current_state.nil?
+        # if we are not already in a state we just dont change
         return :none
       else
-        # normal char
+        # if we were halfway through a span definition, we close it.
         @current_state = nil
         return :close
       end
     end
     
+    # when its a span defined with multiple characters we say we are inside it, or
+    # open it if its the first character
     return_value = :inside
     if @current_state.nil?
       return_value = :open
     end
 
+    # when we suddenly transition to a different span or we don't expect it we close
+    # the span right now.
     if !@state_table.key?(transition_key)
       @current_state = nil
       return_value = :close

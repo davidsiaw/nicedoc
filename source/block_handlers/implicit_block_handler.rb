@@ -2,7 +2,9 @@ class ImplicitBlockHandler < BlockHandler
   def handle(block, handlerstate, context)
     return false unless block.type == :implicit
 
-    lr = LineRenderer.new(block.parse)
+    override = :span
+    override = :div if block.tag == :div
+    lr = LineRenderer.new(block.parse, override: override)
 
     context.send(block.tag) do
       lr.render(self)

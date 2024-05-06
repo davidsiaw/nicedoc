@@ -3,7 +3,7 @@ class ExplicitBlockHandler
     return false unless block.type == :explicit
 
     context.pre do
-      text block.lines.length.to_s
+      #text block.lines.length.to_s
       block.lines.each do |line|
         text "#{line}\n"
       end

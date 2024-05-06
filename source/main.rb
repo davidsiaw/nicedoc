@@ -8,7 +8,7 @@ end
 
 def source_page(filename, path)
   empty_page path, "source of #{filename}" do
-    request_css 'css/main.css'
+    request_css 'css/indigo.css'
     row do
       col 9 do
         pre File.read(filename)

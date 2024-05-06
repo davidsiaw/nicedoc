@@ -4,7 +4,7 @@ class ImplicitBlockHandler < BlockHandler
 
     override = :span
     override = :div if block.tag == :div
-    lr = LineRenderer.new(block.parse, override: override)
+    lr = LineRenderer.new(block.parse, @pi, override: override)
 
     context.send(block.tag) do
       lr.render(self)

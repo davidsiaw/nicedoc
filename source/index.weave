@@ -24,17 +24,25 @@ include "flat_section_list.rb"
 include "section.rb"
 include "sectionifier.rb"
 include "util.rb"
+include "page_info.rb"
 
 Util.instance.generate_css(:indigo)
 Util.instance.generate_css(:print)
 
+root_page = File.realpath('pages')
+
 Dir["pages/**/*.nd"].each do |x|
   path = x.sub(%r{^pages/}, '')
   path.sub!(%r{.nd$}, '')
-  path.sub!(%r{top$}, '') if x.end_with? '/top.nd'
   path.sub!(%r{/$}, '') if path.end_with? '/'
 
-  disp_page x, path
-  disp_page x, path + '.debug', debug: true
-  source_page x, path + '.src'
+  # top.nd is special. its only for the root page
+  path = "" if x == "pages/top.nd"
+
+  cur_page = File.realpath(x)
+  pi = PageInfo.new(root_page, cur_page)
+
+  disp_page pi, path
+  disp_page pi, path + '.debug', debug: true
+  source_page pi, path + '.src'
 end

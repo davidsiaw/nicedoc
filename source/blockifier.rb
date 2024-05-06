@@ -30,8 +30,10 @@ class Blockifier
       consumed = false
       handler_list.each do |handler|
         curblock, status = handler.handle(line, blocks, curblock)
+
         
         if status == :consumed
+          p handler.class
           consumed = true
           break
         end

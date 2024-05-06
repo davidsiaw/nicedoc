@@ -16,6 +16,8 @@ class BlogPageGenerator < ContentGenerator
 
             consumed_by_handler = false
             this.section_handler_list.each do |sh|
+
+              sh.pi = this.pi
               handled = sh.handle(s, self)
 
               if handled

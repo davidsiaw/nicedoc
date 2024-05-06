@@ -2,9 +2,13 @@ class ListLineHandler < SingleLineHandler
   def handle(line, blocks, curblock)
     sbt = single_block_type(line)
 
-    return curblock, :notconsumed unless curblock.lines.length == 0
     return curblock, :notconsumed if sbt.nil?
     return curblock, :notconsumed unless sbt[:tag] == :ul || sbt[:tag] == :ol
+
+    if curblock.lines.length != 0 && curblock.type != :list
+      blocks << curblock
+      curblock = Block.new
+    end
 
     a = Block.new
     a.type = :list
@@ -15,7 +19,9 @@ class ListLineHandler < SingleLineHandler
 
     a.info[:last] = a.info[:tags].first
 
-    if blocks.last&.type == :list
+    if blocks.last.nil?
+      blocks << a
+    elsif blocks.last.type == :list
       a = blocks.last
     else
       blocks << a

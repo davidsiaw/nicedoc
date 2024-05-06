@@ -1,8 +1,11 @@
 
 class DefaultSpanRenderer
-  def initialize(context, arspan)
+  attr_reader :pi
+
+  def initialize(context, arspan, pi)
     @context = context
     @arspan = arspan
+    @pi = pi
   end
 
   def render
@@ -12,37 +15,73 @@ end
 
 require "erb"
 class DblsquareOverrideRenderer < DefaultSpanRenderer
+
+  def ref_filename
+    return "ERR_LONGFORM" if longform?
+
+    if this_is_top?
+      return "#{pi.root_page}#{abs_url_path}.nd"
+    end
+
+    "#{pi.root_page}#{abs_url_path[0..-2]}.nd"
+  end
+
+  def page_title
+    return "ERR_UNKNOWN(#{ref_filename})" unless exists?
+
+    YAML.load(File.read(ref_filename))['title']
+  end
+
+  def this_is_top?
+    pi.cur_page == "#{pi.root_page}/top.nd"
+  end
+
+  def dir
+    if this_is_top?
+      return pi.cur_page.split('/')[0..-2].join('/')
+    end
+
+    pi.cur_page.sub(/\.nd$/, '')
+  end
+
+  def abs_url_path
+    if this_is_top?
+      return "/#{@arspan[:text]}"
+    end
+
+    "#{pi.rel_filepath.sub(/\.nd$/, '')}/#{@arspan[:text]}/"
+  end
+
+  def exists?
+    return true if longform?
+
+    File.exist?(ref_filename)
+  end
+
+  def longform?
+    return true if @arspan[:text].start_with?(%r{https?://})
+
+    false
+  end
+
+
+  def anchor?
+    @arspan[:text].start_with?('#')
+  end
+
   def url
-    front = ""
-    back = ""
-    res = @arspan[:text]
+    return @arspan[:text] if longform?
+    return @arspan[:text] if anchor?
+    return '#' if !exists?
 
-    if res.start_with?('#')
-      front += '#'
-      res = res[1..-1]
-    else
-      back = "/"
-    end
-
-    if res.end_with?('/')
-      res = res[0..-2]
-    end
-
-    front + ERB::Util.url_encode(res) + back
+    abs_url_path
   end
 
   def text
-    res = @arspan[:text]
+    return @arspan[:text] if longform?
+    return @arspan[:text][1..-1] if anchor?
 
-    if res.end_with?('/')
-      res = res[0..-2]
-    end
-
-    if res.start_with?('#')
-      res = res[1..-1]
-    end
-
-    res
+    page_title
   end
 
   def render
@@ -51,13 +90,17 @@ class DblsquareOverrideRenderer < DefaultSpanRenderer
 end
 
 class LineRenderer
-  def initialize(parse, override: :span)
+  def initialize(parse, pi, override: )
+    @pi = pi
     @parse = parse
     @override = override
   end
 
   def render(context)
+    pi = @pi
     @parse.each do |arr|
+
+      # binding.pry
 
       context.send(@override) do
 
@@ -74,7 +117,7 @@ class LineRenderer
               renderclass = Object.const_get(override_renderer_name)
             end
 
-            renderer = renderclass.new(self, arspan)
+            renderer = renderclass.new(self, arspan, pi)
             renderer.render
           end
 

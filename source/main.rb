@@ -1,17 +1,18 @@
 require 'yaml'
+require 'pry'
 
-def disp_page(filename, path, debug: false)
-  nd = Nicedoc.new(filename, debug: debug)
+def disp_page(pi, path, debug: false)
+  nd = Nicedoc.new(pi, debug: debug)
 
   nd.renderer.generate(path, self)
 end
 
-def source_page(filename, path)
-  empty_page path, "source of #{filename}" do
+def source_page(pi, path)
+  empty_page path, "source of #{pi.cur_page}" do
     request_css 'css/indigo.css'
     row do
       col 9 do
-        pre File.read(filename)
+        pre File.read(pi.cur_page)
       end
     end
   end

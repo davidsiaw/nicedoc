@@ -1,7 +1,6 @@
 class ListBlockHandler < BlockHandler
   def counter
     @counter ||= 0
-
     @counter += 1
   end
 
@@ -28,7 +27,7 @@ class ListBlockHandler < BlockHandler
           this.write_list(block, child, self)
         else
           li do
-            lr = LineRenderer.new(child[:parse], override: :div)
+            lr = LineRenderer.new(child[:parse], this.pi, override: :div)
 
             lr.render(self)
 

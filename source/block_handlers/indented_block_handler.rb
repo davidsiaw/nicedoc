@@ -1,4 +1,4 @@
-class IndentedBlockHandler
+class IndentedBlockHandler < BlockHandler
   def handle(block, handlerstate, context)
     return false unless block.type == :indented
 

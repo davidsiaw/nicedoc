@@ -1,11 +1,12 @@
 class ContentGenerator
-  attr_accessor :contents, :yaml, :filename
+  attr_accessor :contents, :yaml, :filename, :pi
 
-  def initialize(context, contents, yaml, filename)
+  def initialize(context, pi, contents, yaml, filename)
     @context = context
     @contents = contents
     @yaml = yaml
     @filename = filename
+    @pi = pi
   end
 
   def lines
@@ -17,7 +18,7 @@ class ContentGenerator
   end
 
   def sections
-    Sectionifier.new(blocks).sections
+    Sectionifier.new(blocks, @pi).sections
   end
 
   def generate!

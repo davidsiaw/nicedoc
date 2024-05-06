@@ -1,0 +1,12 @@
+title: Link test
+type: blog
+---
+
+## This is a local page
+- [[pageone]]
+
+## This is an external page
+[[https://example.com]]
+
+## Back to top
+[[/]]

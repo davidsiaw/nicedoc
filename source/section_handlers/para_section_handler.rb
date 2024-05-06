@@ -19,6 +19,7 @@ class ParaSectionHandler < SectionHandler
 
       consumed_by_handler = false
       block_handler_list.each do |bh|
+        bh.pi = @pi
         handled = bh.handle(block, handlerstate, context)
 
         if handled

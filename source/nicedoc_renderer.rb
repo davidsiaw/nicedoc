@@ -1,15 +1,19 @@
 require 'active_support/inflector'
 
 class NicedocRenderer
-  def initialize(contents, filename, yaml, debug: false)
+  def initialize(contents, pi, yaml, debug: false)
     @contents = contents
     @yaml = yaml
-    @filename = filename
     @debug = debug
+    @pi = pi
+  end
+
+  def filename
+    @pi.cur_page
   end
 
   def dirname
-    @filename.split('/')[0..-2].join('/')
+    filename.split('/')[0..-2].join('/')
   end
 
   def theme
@@ -24,9 +28,12 @@ class NicedocRenderer
     rcontext = self
     yaml = @yaml
     theme = self.theme
-    filename = @filename
+    pi = @pi
 
     context.empty_page path, "#{yaml['title'] || "_"}" do
+      self.define_singleton_method(:page_info) do
+        return pi
+      end
       request_css "css/#{theme}.css"
       rcontext.generate_contents(self)
     end
@@ -43,7 +50,8 @@ class NicedocRenderer
   end
 
   def generate_contents(context)
-    cg = generator_class.new(context, @contents, @yaml, @filename)
+    pi = @pi
+    cg = generator_class.new(context, @pi, @contents, @yaml, filename)
     cg.generate!
   end
 end

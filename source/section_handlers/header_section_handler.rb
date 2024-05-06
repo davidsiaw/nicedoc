@@ -4,7 +4,7 @@ class HeaderSectionHandler < SectionHandler
 
     context.send(:"h#{section.headerlevel}") do
 
-      lr = LineRenderer.new(section.blocks.first.parse)
+      lr = LineRenderer.new(section.blocks.first.parse, pi, override: :span)
       lr.render(self)
 
       #text section.blocks.first.lines.first

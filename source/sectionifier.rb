@@ -1,8 +1,9 @@
 # Sectionifier
 # turns blocks into semantic sections
 class Sectionifier
-  def initialize(blocks)
+  def initialize(blocks, pi)
     @blocks = blocks
+    @pi = pi
   end
 
   # return remaining blocks
@@ -106,6 +107,7 @@ class Sectionifier
       remaining.length.times do
         cursection = Section.new
         remaining = consume_block(remaining, cursection)
+        cursection.pi = @pi
         result << cursection
         break if remaining.length.zero?
       end

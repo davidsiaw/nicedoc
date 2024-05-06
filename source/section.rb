@@ -1,5 +1,5 @@
 class Section
-  attr_accessor :blocks, :children, :type, :headerlevel, :listlevel
+  attr_accessor :blocks, :children, :type, :headerlevel, :listlevel, :pi
 
   def initialize
     @blocks = []

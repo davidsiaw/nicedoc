@@ -124,3 +124,40 @@ talk abut b subpart
 specced block
 lalala
 ```
+
+Exclusive tags
+--------------
+
+exclusives are syntax that do not allow any formatting inside them. `link` and `code` are two of them
+
+
+```
+In this sentence there is a [[link]].
+```
+In this sentence there is a [[link]].
+
+
+```
+a [[link has no *internal* formatting]] that is effective.
+```
+a [[link has no *internal* formatting]] that is effective.
+
+
+```
+an `exclusive has no __internal__ formatting` that is effective.
+```
+an `exclusive has no __internal__ formatting` that is effective.
+
+
+```
+exclusives __can be `inside` outer-non-exclusives__.
+```
+exclusives __can be `inside` outer-non-exclusives__.
+
+list test
+---------
+
+- list with nothing
+- list *with bold* thing
+- list **very bold**
+- this is ***super bold***

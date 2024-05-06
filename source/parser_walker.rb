@@ -25,7 +25,7 @@ class ParserWalker
         curtags -= t0[:tag]
       end
 
-      if t0[:x1] < t1[:x0]
+      if t0[:x1] <= t1[:x0]
         result << {styles: curtags.clone, text: @text[t0[:x1]..t1[:x0]] }
       end
 
@@ -119,6 +119,7 @@ class ParserWalker
         #puts "#{pos}: #{chr} - #{res} - #{sm.current_state},#{sm.previous_state} - #{parser_builder.state_tag_table[sm.previous_state]}"
       end
 
+      #p parses
       parses
     end
   end

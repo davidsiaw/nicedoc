@@ -11,7 +11,7 @@ class LineParser
   
     pw = ParserWalker.new(@text)
 
-    #puts pw.parse_positions
+    #p pw.parse_positions
 
     {
       array: pw.spans

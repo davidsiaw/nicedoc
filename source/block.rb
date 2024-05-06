@@ -14,7 +14,7 @@ class Block
       info[:tags].map do |tag|
         thing = { **tag }
         if tag[:text]
-          thing[:parse] = tag[:text]&.map{ |line| LineParser.new(line).tree }
+          thing[:parse] = tag[:text].map{ |line| LineParser.new(line).tree }
         end
         thing
 

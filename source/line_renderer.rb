@@ -14,6 +14,69 @@ class DefaultSpanRenderer
 end
 
 require "erb"
+
+class LocalLinkHelper
+  def initialize(top_file:, current_file:)
+    @top_file = top_file
+    @current_file = current_file
+  end
+
+  def root_dir
+    @top_file.sub(%r{/top.nd$}, '')
+  end
+
+  def cur_dir
+    @current_file.sub(%r{top.nd$}, '')
+  end
+
+  def rel_path
+    cur_dir.sub(/^#{root_dir}/, '')
+  end
+
+  def equiv_file(val)
+    if val == '/'
+      return @top_file
+    end
+
+    rel_path
+  end
+
+  def equiv_url(val)
+  end
+
+  def error?(val)
+  end
+
+end
+
+class LinkHelper
+  def initialize(root: '/')
+    @root = root
+  end
+
+  def anchor?(val)
+    val.start_with?('#')
+  end
+
+  def external?(val)
+    val.start_with?(%r{https?://})
+  end
+
+  def local?(val)
+    !anchor?(val) && !external?(val)
+  end
+
+  def url_for_local(val)
+    toks = val.split('/')
+
+    if toks.length == 0
+      return @root
+    end
+    @root + toks.join('/') + '/'
+  end
+
+end
+
 class DblsquareOverrideRenderer < DefaultSpanRenderer
 
   def ref_filename
@@ -63,7 +126,6 @@ class DblsquareOverrideRenderer < DefaultSpanRenderer
 
     false
   end
-
 
   def anchor?
     @arspan[:text].start_with?('#')

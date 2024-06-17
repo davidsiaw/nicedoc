@@ -30,7 +30,23 @@ class LocalLinkHelper
   end
 
   def rel_path
-    cur_dir.sub(/^#{root_dir}/, '')
+    raw_rel_path = cur_dir.sub(/^#{root_dir}/, '')
+    toks = raw_rel_path.split('/')
+
+    p toks
+
+    proctocs = []
+    toks.each do |x|
+      if x == '..'
+        proctocs.push (x)
+      elsif proctocs.length > 0
+        proctocs.pop
+      end
+    end
+
+    proctocs.join('/')
+
+
   end
 
   def equiv_file(val)
@@ -86,7 +102,22 @@ class DblsquareOverrideRenderer < DefaultSpanRenderer
       return "#{pi.root_page}#{abs_url_path}.nd"
     end
 
-    "#{pi.root_page}#{abs_url_path[0..-2]}.nd"
+    "#{pi.root_page}#{processed_url_path}.nd"
+  end
+
+  def processed_url_path
+    toks = abs_url_path.split('/')
+
+    proctocs = []
+    toks.each do |x|
+      if x != '..'
+        proctocs.push (x)
+      elsif proctocs.length > 0
+        proctocs.pop
+      end
+    end
+
+    proctocs.join('/')
   end
 
   def page_title
@@ -151,6 +182,54 @@ class DblsquareOverrideRenderer < DefaultSpanRenderer
   end
 end
 
+
+class SqparensOverrideRenderer < DefaultSpanRenderer
+
+  def latek
+    @arspan[:text]
+  end
+
+  def safestring
+    str = latek.
+      sub('"', '\\"').
+      sub("'", "\\'").
+      sub("!", "\\!").
+      sub("$", "\\$").
+      sub("`", "\\`").
+      sub("~", "\\~").
+      sub("\n", "").
+      sub("\r", "").
+      sub("\\", "\\\\")
+
+    %{"#{str}"}
+  end
+
+  def mjoutput
+    @mjoutput ||= `node_modules/.bin/am2htmlcss #{safestring}`
+  end
+
+  def mjlines
+    @mjlines ||= mjoutput.split("\n")
+  end
+
+  def css
+    mjlines[ mjlines.index('<style>')..mjlines.index('</style>') ]
+  end
+
+  def body
+    mjlines[ mjlines.index('<body>')+1..mjlines.index('</body>')-1 ]
+  end
+
+  def render
+
+    @context.text css
+    @context.text body
+
+    #@context.span @arspan[:text], class: @arspan[:styles].map{|x| "span-bold"}.join(' ')
+
+  end
+end
+
 class LineRenderer
   def initialize(parse, pi, override: )
     @pi = pi
@@ -166,15 +245,36 @@ class LineRenderer
 
       context.send(@override) do
 
-        arr[:array].each do |arspan|
+        arr[:array].each_with_index do |arspan, idx|
 
-          if arspan[:styles].length == 0
+          prev_arspan = arr[:array][idx-1]
+          next_arspan = arr[:array][idx+1]
+
+          prev_style = prev_arspan.nil? || prev_arspan[:styles].nil?  ? nil : prev_arspan[:styles][0]
+          next_style = next_arspan.nil? || next_arspan[:styles].nil?  ? nil : next_arspan[:styles][0]
+          curr_style = arspan.nil? || arspan[:styles].nil?  ? nil : arspan[:styles][0]
+
+          # support for markdown style links
+          front_mdlink = curr_style == :square && next_style == :parens
+          commit_mdlink = prev_style == :square && curr_style == :parens
+
+          if front_mdlink
+            # if we see the pattern, don't render this and move next
+            next
+
+          elsif commit_mdlink
+            # if we see the pattern behind us, render all the info
+            a prev_arspan[:text], href: arspan[:text]
+
+          elsif arspan[:styles].length == 0
             text arspan[:text]
+
           else
             renderclass = DefaultSpanRenderer
 
             # if the innermost span is something special we render it differently
             override_renderer_name = "#{arspan[:styles].last.to_s.camelize}OverrideRenderer"
+
             if Object.const_defined?(override_renderer_name)
               renderclass = Object.const_get(override_renderer_name)
             end

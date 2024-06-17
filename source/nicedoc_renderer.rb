@@ -6,6 +6,7 @@ class NicedocRenderer
     @yaml = yaml
     @debug = debug
     @pi = pi
+    pi.yaml = yaml
   end
 
   def filename
@@ -34,7 +35,8 @@ class NicedocRenderer
       self.define_singleton_method(:page_info) do
         return pi
       end
-      request_css "css/#{theme}.css"
+
+      request_css "css/#{theme}-#{yaml['type']}.css"
       rcontext.generate_contents(self)
     end
   end

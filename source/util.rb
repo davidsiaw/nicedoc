@@ -1,36 +1,89 @@
 class Util
     include Singleton
 
-    def fonts
+    def fonts(pagetype)
+
+      basictext = 'EBGaramond'
+      basictext = 'SourceSerif' if pagetype == :blog || pagetype == :opinion
+
+      basicsize = 1.9
+      basicsize = 1.4 if pagetype == :blog || pagetype == :opinion
+
+
+      headertext = 'LinLibertine'
+      headertext = 'Overpass' if pagetype == :blog || pagetype == :opinion
+      #headertext = 'FiraCode' if pagetype == :blog
+
+
       {
         unit: 'rem',
         faces: {
-          p: 'Overpass',
-          h1: 'LinLibertine',
-          h2: 'LinLibertine',
-          h3: 'LinLibertine',
-          h4: 'LinLibertineCaps',
-          h5: 'LinLibertineCaps',
-          h6: 'LinLibertineCaps',
+          body: basictext,
+          p:    basictext,
+          pre: 'FiraCode',
+          h1: headertext,
+          h2: headertext,
+          h3: headertext,
+          h4: headertext,
+          h5: headertext,
+          h6: headertext,
         },
         sizes: {
-          p: 1.55,
-          h1: 5,
-          h2: 3.5,
-          h3: 3,
+          body: basicsize,
+          p: basicsize,
+          pre: 1.55,
+          h1: 4,
+          h2: 3,
+          h3: 2.5,
           h4: 2.5,
           h5: 2.3,
           h6: 2.3,
         },
         weights: {
-          p: 'normal',
+          body: 100,
+          p: 'lighter',
+          pre: 'normal',
           h1: 'bold',
           h2: 'bold',
           h3: 'bold',
           h4: 'bold',
           h5: 'normal',
           h6: 'bold',
-        }
+        },
+        margin_top: {
+          body: 0,
+          p: 0,
+          pre: 0,
+          h1: 20,
+          h2: 20,
+          h3: 20,
+          h4: 20,
+          h5: 20,
+          h6: 20,
+
+        },
+        margin_bottom: {
+          body: 0,
+          p: 0,
+          pre: 0,
+          h1: 10,
+          h2: 10,
+          h3: 10,
+          h4: 10,
+          h5: 10,
+          h6: 10,
+        },
+        text_align: {
+          body: 'justify',
+          p:   'justify',
+          pre: 'left',
+          h1: 'left',
+          h2: 'left',
+          h3: 'left',
+          h4: 'left',
+          h5: 'left',
+          h6: 'left',
+        },
       }
     end
   
@@ -62,69 +115,208 @@ class Util
   
     def generate_css(profile=:indigo)
       File.write("css/#{profile}.css", out(profile))
+      File.write("css/#{profile}-article.css", out(profile, :article))
+      File.write("css/#{profile}-blog.css", out(profile, :blog))
+      File.write("css/#{profile}-opinion.css", out(profile, :opinion))
+      File.write("css/#{profile}-manual.css", out(profile, :manual))
     end
   
-    def bigfonts
-      (1..6).map do |x|
-        sym = "h#{x}".to_sym
+    def bigfonts(pagetype)
+      fonttags = (1..6).map { |x| "h#{x}".to_sym } + %i[
+                  p
+                  body
+                  pre
+                ]
+
+      fonttags.map do |sym|
         <<~CSS
           #{sym} {
-            font-family: '#{fonts[:faces][sym]}';
-            font-size: #{fonts[:sizes][sym]}#{fonts[:unit]};
-            font-weight: #{fonts[:weights][sym]};
-            margin-top: 20px;
-            margin-bottom: 10px;
+            font-family: '#{fonts(pagetype)[:faces][sym]}';
+            font-size: #{fonts(pagetype)[:sizes][sym]}#{fonts(pagetype)[:unit]};
+            font-weight: #{fonts(pagetype)[:weights][sym]};
+            margin-top: #{fonts(pagetype)[:margin_top][sym]}px;
+            margin-bottom: #{fonts(pagetype)[:margin_bottom][sym]}px;
           }
         CSS
       end.join("\n")
     end
 
-    def out(profile)
+    def out(profile, pagetype=:article)
       <<~CSS
   
       @media print {
         body {
         }
               
-          .pagebreak {
-            clear: both;
-            page-break-after: always;
+        .pagebreak {
+          clear: both;
+          page-break-after: always;
         }
+
+        .span-overline {
+          border-top: 1px solid;
+        }
+      }
+  
+      @font-face {
+        font-family: 'FiraCode';
+        src:  url('FiraCode-Light.ttf') format('truetype');
+        font-weight: 200;
+      }
+  
+      @font-face {
+        font-family: 'FiraCode';
+        src:  url('FiraCode-Regular.ttf') format('truetype');
+        font-weight: 400;
+      }
+  
+      @font-face {
+        font-family: 'FiraCode';
+        src:  url('FiraCode-SemiBold.ttf') format('truetype');
+        font-weight: 600;
+      }
+
+      @font-face {
+        font-family: 'FiraCode';
+        src:  url('FiraCode-Bold.ttf') format('truetype');
+        font-weight: 800;
       }
   
       @font-face {
         font-family: 'Overpass';
         src:  url('overpass-extralight.ttf') format('truetype');
-        font-weight: 100 200;
+        font-weight: 200;
       }
 
       @font-face {
         font-family: 'Overpass';
         src:  url('overpass-regular.ttf') format('truetype');
-        font-weight: 300 400;
+        font-weight: 400;
       }
 
       @font-face {
         font-family: 'Overpass';
         src:  url('overpass-bold.ttf') format('truetype');
-        font-weight: 500 600;
+        font-weight: 600;
       }
 
       @font-face {
         font-family: 'Overpass';
         src:  url('overpass-heavy.ttf') format('truetype');
-        font-weight: 700 800;
+        font-weight: 800;
+      }
+
+
+      @font-face {
+        font-family: 'SourceSerif';
+        src:  url('SourceSerif4-Light.ttf') format('truetype');
+        font-weight: 200;
       }
 
       @font-face {
-        font-family: 'Overpass';
-        src:  url('overpass-heavy.ttf') format('truetype');
-        font-weight: 900 900;
+        font-family: 'SourceSerif';
+        src:  url('SourceSerif4-Medium.ttf') format('truetype');
+        font-weight: 400;
       }
+
+      @font-face {
+        font-family: 'SourceSerif';
+        src:  url('SourceSerif4-Bold.ttf') format('truetype');
+        font-weight: 600;
+      }
+
+      @font-face {
+        font-family: 'SourceSerif';
+        src:  url('SourceSerif4-Black.ttf') format('truetype');
+        font-weight: 800;
+      }
+
+
+      @font-face {
+        font-family: 'SourceSerif';
+        src:  url('SourceSerif4-LightItalic.ttf') format('truetype');
+        font-weight: 200;
+        font-style: italic;
+      }
+
+      @font-face {
+        font-family: 'SourceSerif';
+        src:  url('SourceSerif4-MediumItalic.ttf') format('truetype');
+        font-weight: 400;
+        font-style: italic;
+      }
+
+      @font-face {
+        font-family: 'SourceSerif';
+        src:  url('SourceSerif4-BoldItalic.ttf') format('truetype');
+        font-weight: 600;
+        font-style: italic;
+      }
+
+      @font-face {
+        font-family: 'SourceSerif';
+        src:  url('SourceSerif4-BlackItalic.ttf') format('truetype');
+        font-weight: 800;
+        font-style: italic;
+      }
+
+
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-Regular.ttf') format('truetype');
+        font-weight: 200;
+      }
+
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-SemiBold.ttf') format('truetype');
+        font-weight: 400;
+      }
+
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-Bold.ttf') format('truetype');
+        font-weight: 600;
+      }
+
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-ExtraBold.ttf') format('truetype');
+        font-weight: 800;
+      }
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-Italic.ttf') format('truetype');
+        font-weight: 200;
+        font-style: italic;
+      }
+
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-SemiBoldItalic.ttf') format('truetype');
+        font-weight: 400;
+        font-style: italic;
+      }
+
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-BoldItalic.ttf') format('truetype');
+        font-weight: 600;
+        font-style: italic;
+      }
+
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-ExtraBoldItalic.ttf') format('truetype');
+        font-weight: 800;
+        font-style: italic;
+      }
+
+
 
       @font-face {
         font-family: 'InterLight';
-        src:  url('Inter-Light-BETA.ttf') format('truetype')
+        src:  url('Inter-Light-BETA.ttf') format('truetype');
       }
 
       @font-face {
@@ -168,31 +360,17 @@ class Util
       }
   
       body {
-        font-family: #{fonts[:faces][:p]};
         background-color: #{profiles[:bgcolor][profile]};
         color: #{profiles[:fgcolor][profile]};
-        text-align: justify;
-        text-justify: inter-word;
+        text-align: #{fonts(pagetype)[:text_align][:p]};
 
 
-        font-size: #{fonts[:sizes][:p]}#{fonts[:unit]};
+        font-size: #{fonts(pagetype)[:sizes][:p]}#{fonts(pagetype)[:unit]};
         font-weight: 100;
       }
   
       body:not(.mini-navbar) {
         background-color: #{profiles[:bgcolor][profile]};
-  
-      }
-  
-      @font-face {
-        font-family: 'FiraCodeLight';
-        src:  url('FiraCode-Light.ttf') format('truetype')
-      }
-  
-  
-      @font-face {
-        font-family: 'FiraCode';
-        src:  url('FiraCode-Regular.ttf') format('truetype')
       }
   
       .gray-bg {
@@ -209,7 +387,7 @@ class Util
       }
   
       .nav>li {
-        font-size: #{fonts[:sizes][:p]}#{fonts[:unit]};
+        font-size: #{fonts(pagetype)[:sizes][:p]}#{fonts(pagetype)[:unit]};
         font-family: Verdana;
         line-height: 1.0em;
         padding-top: 0em;
@@ -217,7 +395,7 @@ class Util
       }
   
       .nav>li>a {
-        font-size: #{fonts[:sizes][:p]}#{fonts[:unit]};
+        font-size: #{fonts(pagetype)[:sizes][:p]}#{fonts(pagetype)[:unit]};
         color: #{profiles[:fgcolor][profile]};
         font-weight: 100;
         padding-left: 0.3rem;
@@ -225,33 +403,28 @@ class Util
         padding-bottom: 0.5rem;
       }
   
-      #{bigfonts}
+      #{bigfonts(pagetype)}
   
       hr {
         border-top: 2px solid #000;
       }
   
-      li {
-        font-weight: 100;
-      }
-  
       p {
-        text-indent: 1.5em;
+        text-indent: #{pagetype == :opinion ? 0 : 1.5}em;
         margin-bottom: 20px;
       }
   
       p.noindent {
-        text-align: justify;
-        text-justify: inter-word;
         text-indent: 0em;
       }
   
       .dropcap {
-        font-size: 5.5rem;
+        font-size: 5rem;
         float: left;
         margin-right: 0.2rem;
         margin-top: -1.5rem;
         margin-bottom: -3.0rem;
+        font-weight: 500;
       }
 
       a {
@@ -302,9 +475,11 @@ class Util
         border: 1px solid #{profiles[:prebgcolor][profile]};
         background-color: #{profiles[:prebgcolor][profile]};
         color: #{profiles[:prefgcolor][profile]};
-        font-size: 1.25rem;
-        font-weight: 600;
-        font-family: FiraCode;
+      }
+
+      pre.wrapped {
+        text-wrap: balance;
+
       }
 
       .span-italics {
@@ -312,7 +487,7 @@ class Util
       }
   
       .span-bold {
-        font-weight: 300;
+        font-weight: 400;
       }
 
       .span-verybold {
@@ -320,8 +495,7 @@ class Util
       }
 
       .span-superbold {
-        font-weight: 900;
-/*        color: #ff1e1e;*/
+        font-weight: 800;
       }
 
       .span-underline {
@@ -333,13 +507,13 @@ class Util
       }
 
       .span-overline {
-        border-top: 1px solid hsla(232,15%,95%,1);
+        border-top: 1px solid;
       }
 
       .span-code {
-        font-size: 1.25rem;
-        font-weight: bold;
-        font-family: FiraCode;
+        font-size: #{fonts(pagetype)[:sizes][:pre]}#{fonts(pagetype)[:unit]};
+        font-weight: #{fonts(pagetype)[:weights][:pre]};
+        font-family: #{fonts(pagetype)[:faces][:pre]};
         border: 3px solid hsla(232,15%,15%,1);
         border-radius: 5px;
         background-color: hsla(232,15%,15%,1);

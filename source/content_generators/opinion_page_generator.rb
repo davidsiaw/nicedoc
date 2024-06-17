@@ -1,0 +1,2 @@
+class OpinionPageGenerator < BasePageGenerator
+end

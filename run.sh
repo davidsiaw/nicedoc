@@ -1,10 +1,9 @@
 sh build.sh
 docker run --rm -ti \
-	-v $PWD:$PWD \
-	--workdir=$PWD \
+	-p 4567:4567 \
+	-v $PWD/source:/app/source \
+	-v $PWD/pages:/app/pages \
 	-u $UID:$GID \
-	-e BUNDLE_PATH="$PWD/.bundler" \
-	-e BUNDLE_DISABLE_SHARED_GEMS=true \
-	-e HOME=$PWD \
-	nicedoc \
+	-e HOME=/app \
+	davidsiaw/nicedoc \
 	$@

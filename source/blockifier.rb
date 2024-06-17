@@ -33,7 +33,7 @@ class Blockifier
 
         
         if status == :consumed
-          p handler.class
+          #p handler.class
           consumed = true
           break
         end

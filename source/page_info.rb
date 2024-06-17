@@ -1,6 +1,7 @@
 class PageInfo
   attr_reader :root_page, :cur_page
-
+  attr_accessor :yaml
+  
   def initialize(root_page, cur_page)
     @root_page = root_page
     @cur_page = cur_page

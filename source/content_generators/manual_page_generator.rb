@@ -1,0 +1,2 @@
+class ManualPageGenerator < BasePageGenerator
+end

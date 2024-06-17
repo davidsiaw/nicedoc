@@ -14,7 +14,7 @@ class ParserBuilder
           parens: { front: "(",   back: ")" },
             code: { front: "`",   back: "`", exclusive: true },
        dblsquare: { front: "[[",  back: "]]", exclusive: true },
-        sqparens: { front: "[(",  back: ")]" },
+        sqparens: { front: "[(",  back: ")]", exclusive: true },
   }
 
   def build!

@@ -10,7 +10,7 @@ class ImplicitLineHandler
     if curblock.tag == :div && curblock.lines.length == 0 && line.start_with?('  ')
       curblock.tag = :p
       # first line determines type of block
-      curblock.lines << line
+      curblock.lines << line[2..-1]
 
     elsif curblock.tag == :p
       # paragraphs are collapsed to one line

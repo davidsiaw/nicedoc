@@ -1,1 +1,1 @@
-docker build . -t nicedoc
+docker build . -t davidsiaw/nicedoc

@@ -11,8 +11,8 @@ def source_page(pi, path)
   empty_page path, "source of #{pi.cur_page}" do
     request_css 'css/indigo.css'
     row do
-      col 9 do
-        pre File.read(pi.cur_page)
+      full do
+        pre File.read(pi.cur_page), class: :wrapped
       end
     end
   end

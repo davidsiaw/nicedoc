@@ -1,0 +1,2 @@
+class ArticlePageGenerator < BasePageGenerator
+end

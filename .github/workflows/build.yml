@@ -4,6 +4,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: yarn
+      run: yarn
     - name: build
       run: |-
         docker build --platform linux/amd64 . -t davidsiaw/nicedoc
@@ -12,8 +14,6 @@ jobs:
       with:
         username: davidsiaw
         password: ${{ secrets.DOCKER_PAT }}
-    - name: yarn
-      run: yarn
     - name: push branch
       if: github.ref != 'refs/heads/master'
       run: |-

@@ -12,6 +12,8 @@ jobs:
       with:
         username: davidsiaw
         password: ${{ secrets.DOCKER_PAT }}
+    - name: yarn
+      run: yarn
     - name: push branch
       if: github.ref != 'refs/heads/master'
       run: |-

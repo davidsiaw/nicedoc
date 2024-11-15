@@ -1,3 +1,5 @@
+require_relative 'base_page_generator'
+
 class DebugPageGenerator < ContentGenerator
   def generate!
     sections.each do |s|

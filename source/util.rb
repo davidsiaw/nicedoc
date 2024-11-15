@@ -137,6 +137,14 @@ class Util
             margin-top: #{fonts(pagetype)[:margin_top][sym]}px;
             margin-bottom: #{fonts(pagetype)[:margin_bottom][sym]}px;
           }
+
+          .menu #{sym} {
+            font-family: '#{fonts(:blog)[:faces][sym]}';
+            font-size: #{fonts(:blog)[:sizes][sym]}#{fonts(pagetype)[:unit]};
+            font-weight: #{fonts(:blog)[:weights][sym]};
+            margin-top: #{fonts(:blog)[:margin_top][sym]}px;
+            margin-bottom: #{fonts(:blog)[:margin_bottom][sym]}px;
+          }
         CSS
       end.join("\n")
     end
@@ -311,8 +319,6 @@ class Util
         font-weight: 800;
         font-style: italic;
       }
-
-
 
       @font-face {
         font-family: 'InterLight';
@@ -591,6 +597,91 @@ class Util
         font-family: FiraCodeLight;
         text-indent: 0em;
         white-space: pre-wrap;
+      }
+
+      .menu {
+        margin-top: 2em;
+
+
+
+
+
+        font-size: #{fonts(:blog)[:sizes][:p]}#{fonts(:blog)[:unit]};
+        font-weight: 100;
+
+      }
+
+      .menu .panel-heading {
+        background-color: transparent;
+        padding: 0px;
+        color: inherit;
+      }
+
+      .menu a.menulink {
+        color: #{profiles[:linkcolor][profile]};
+      }
+
+      .menu a.menulink:hover, a.menulink:focus {
+        color: #23527c;
+      }
+
+
+
+      .menu h5 {
+        margin: 0px;
+        font-family: '#{fonts(:blog)[:faces][:p]}';
+        font-size: #{fonts(:blog)[:sizes][:p]}#{fonts(:blog)[:unit]};
+
+        line-height: 1.42857143;
+      }
+
+      .menu .panel {
+        background-color: transparent;
+        border: 0px;
+      }
+
+      .menu .panel-body {
+        padding: 0em;
+        padding-left: 0.5em;
+      }
+
+      .menu  .panel-heading+.panel-collapse>.panel-body {
+
+        border-top: 1px solid #666;
+      }
+
+      .menu .panel-group {
+        margin-bottom: 0px;
+        margin-top: 0em;
+      }
+
+      .menu ul {
+        padding-inline-start: 0px;
+        list-style-type: none;
+        margin-bottom: 0.5em;
+            font-family: '#{fonts(:blog)[:faces][:p]}';
+      }
+
+      .menu .panel-title {
+          color: #888;
+      }
+
+      .menu .panel-title a[data-toggle].collapsed:before {
+          font-family: "FontAwesome"; 
+          font-weight: 900; 
+          content: "\\f105";
+          color:  #{profiles[:fgcolor][profile]};
+          position: absolute;
+          right: 30px;
+      }
+
+      .menu .panel-title a[data-toggle]:not(.collapsed):after {
+          font-family: "FontAwesome"; 
+          font-weight: 900; 
+          content: "\\f107"; 
+          color:  #{profiles[:fgcolor][profile]};
+          position: absolute;
+          right: 30px;
       }
       
       CSS

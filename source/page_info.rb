@@ -1,10 +1,11 @@
 class PageInfo
-  attr_reader :root_page, :cur_page
+  attr_reader :root_page, :cur_page, :tree
   attr_accessor :yaml
   
-  def initialize(root_page, cur_page)
+  def initialize(root_page, cur_page, tree)
     @root_page = root_page
     @cur_page = cur_page
+    @tree = tree
   end
 
   def rel_filepath
@@ -17,5 +18,8 @@ class PageInfo
     end
 
     rel_filepath.sub(/\.nd$/, '/')
+  end
+
+  def title
   end
 end

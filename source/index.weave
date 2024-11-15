@@ -31,7 +31,9 @@ Util.instance.generate_css(:print)
 
 root_page = File.realpath('pages')
 
-Dir["pages/**/*.nd"].each do |x|
+tree = Dir["pages/**/*.nd"].map {|x| [x,nil]}.to_h
+
+tree.each do |x,_|
   path = x.sub(%r{^pages/}, '')
   path.sub!(%r{.nd$}, '')
   path.sub!(%r{/$}, '') if path.end_with? '/'
@@ -40,7 +42,8 @@ Dir["pages/**/*.nd"].each do |x|
   path = "" if x == "pages/top.nd"
 
   cur_page = File.realpath(x)
-  pi = PageInfo.new(root_page, cur_page)
+  pi = PageInfo.new(root_page, cur_page, tree)
+  tree[x] = pi
 
   disp_page pi, path
   disp_page pi, path + '.debug', debug: true

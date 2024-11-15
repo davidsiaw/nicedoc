@@ -1,0 +1,37 @@
+title: Exclusives
+type: manual
+---
+
+# Exclusives
+
+Exclusives are not so much a feature of Nicedoc per se, but a behavior exhibited by certain elements such as *links* and *code*.
+
+exclusives are syntax that do not allow any formatting inside them.
+
+
+## Using Links
+
+```
+In this sentence there is a [[link]].
+```
+In this sentence there is a [[link]].
+
+
+```
+a [[link has no *internal* formatting]] that is effective.
+```
+a [[link has no *internal* formatting]] that is effective.
+
+
+## Using Code
+
+```
+an `exclusive has no _internal_ formatting` that is effective.
+```
+an `exclusive has no _internal_ formatting` that is effective.
+
+
+```
+exclusives _can be `inside` outer-non-exclusives_.
+```
+exclusives _can be `inside` outer-non-exclusives_.

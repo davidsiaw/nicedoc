@@ -1,0 +1,34 @@
+title: List test
+type: manual
+---
+
+# Unordered List test
+
+- list with nothing
+- list *with bold* thing
+- list **very bold**
+- this is ***super bold***
+
+# Ordered List Test
+
+1. hello
+2. meow
+3. bye
+
+# Nested List Test
+
+- a1
+- b
+- c
+  - c0
+  - c1
+    - c1c
+      subtext of c1c
+  - c2
+- d
+- e
+- ordered
+  1. one
+   - dda
+  2. two
+   - awdwd

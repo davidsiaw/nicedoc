@@ -98,6 +98,14 @@ class DblsquareOverrideRenderer < DefaultSpanRenderer
   def ref_filename
     return "ERR_LONGFORM" if longform?
 
+    if targets_root?
+      return "#{pi.root_page}/top.nd"
+    end
+
+    if targets_abs?
+      return "#{pi.root_page}/#{@arspan[:text][1..-1]}.nd"
+    end
+
     if this_is_top?
       return "#{pi.root_page}#{abs_url_path}.nd"
     end
@@ -138,12 +146,33 @@ class DblsquareOverrideRenderer < DefaultSpanRenderer
     pi.cur_page.sub(/\.nd$/, '')
   end
 
+  def targets_abs?
+    @arspan[:text].start_with?('/')
+  end
+
+  def targets_root?
+    @arspan[:text] == ('/')
+  end
+
   def abs_url_path
     if this_is_top?
       return "/#{@arspan[:text]}"
     end
 
-    "#{pi.rel_filepath.sub(/\.nd$/, '')}/#{@arspan[:text]}/"
+    if targets_root?
+      return '/'
+    end
+
+    if targets_abs?
+      return @arspan[:text]
+    end
+
+    # [0..-2] means start checking from the directory the curfile is in
+    "#{one_up_path.sub(/\.nd$/, '')}/#{@arspan[:text]}/"
+  end
+
+  def one_up_path
+    pi.rel_filepath.split('/')[0..-2].join('/')
   end
 
   def exists?

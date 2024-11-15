@@ -1,4 +1,4 @@
-FROM ruby:2.7
+FROM ruby
 
 
 RUN curl -sL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_setup.sh

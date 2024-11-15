@@ -1,0 +1,18 @@
+title: Text Styling
+type: manual
+---
+
+# Text Styling Elements
+
+*bold*
+**vbold**
+/italics/
+_underline_
+--strikeout--
+^overline^
+`code`
+_stragne_ things _hahaha/lolo_lolol/ some code here `make love`
+[[link]]
+
+- *bold*
+- 

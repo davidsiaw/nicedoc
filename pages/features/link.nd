@@ -1,0 +1,18 @@
+title: Link test
+type: manual
+---
+
+## This is a local page
+- [[list]]
+
+## This is a sub page
+- [[link/pageone]]
+
+## Back to top
+- [[/]]
+
+## This is a absolute link
+- [[/features/math]]
+
+## This is an external page
+- [[https://example.com]]

@@ -5,3 +5,17 @@
 .gitconfig
 css/indigo.css
 css/print.css
+
+css/indigo-article.css
+css/indigo-blog.css
+css/indigo-manual.css
+css/indigo-opinion.css
+css/print-article.css
+css/print-blog.css
+css/print-manual.css
+css/print-opinion.css
+.DS_Store
+.docker-build.log
+.npm/
+.prebuild-dockerfile
+node_modules/

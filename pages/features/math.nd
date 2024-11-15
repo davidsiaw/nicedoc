@@ -1,0 +1,27 @@
+title: Math
+type: manual
+---
+
+# Math Symbols
+
+It is possible to write mathematical equations in NiceDoc. These equations use AsciiMath and are compiled down to plain HTML and CSS, allowing non-JS enabled browsers to also view them.
+
+
+As an example,
+
+```
+this sentence has some math in it [( dV/dt + a!*e^(pi/2t) )]
+```
+
+The above block results in
+
+---
+
+this sentence has some math in it [( dV/dt + a!*e^(pi/2t) )]
+
+--
+
+
+# How to write them
+
+There are many ways math equations can be written

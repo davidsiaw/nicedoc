@@ -14,7 +14,6 @@ class Blockifier
       ListLineHandler.new,
       ListSubtextLineHandler.new,
       SingleLineHandler.new,
-      CodeBlockLineHandler.new,
       EmptyLineHandler.new,
       IndentedLineHandler.new,
       ImplicitLineHandler.new

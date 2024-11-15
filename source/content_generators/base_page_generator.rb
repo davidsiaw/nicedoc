@@ -15,7 +15,7 @@ class BasePageGenerator < ContentGenerator
       menutitle = %Q{<a href="#{rel_location}" class="menulink">#{name}</a>}
 
       menutitle = name if rel_location.nil?
-      menutitle = %Q{#{name} <} if curpagepi.rel_location == rel_location
+      menutitle = %Q{<span id="selected">#{name}</span>} if curpagepi.rel_location == rel_location
 
       collapsed true unless curpagepi.rel_location.start_with?(treehash[:name])
       # puts "DEBUGG #{curpagepi.rel_location} AND #{treehash[:name]}"
@@ -33,7 +33,7 @@ class BasePageGenerator < ContentGenerator
             # link to child page
             if curpagepi.rel_location == nm[:pi].rel_location
               li title: "This is the current page" do 
-                text "#{nm[:pi].yaml['title']} <"
+                span nm[:pi].yaml['title'], id: "selected"
               end
 
             else
@@ -95,7 +95,7 @@ class BasePageGenerator < ContentGenerator
       col 12 do
         div class: "row" do
 
-          div class: "hidden-xs hidden-sm col-md-2 col-lg-2" do
+          div class: "hidden-xs hidden-sm col-md-2 col-lg-2 col-print-hidden" do
             this.genmenu(self)
           end
 

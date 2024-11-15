@@ -78,10 +78,6 @@ class ParserWalker
 
         inside_exclusive = active_tags.any? { |k,v| ParserBuilder::SPAN_TYPES[k][:exclusive] }
 
-        # if we are inside an exclusive tag, we consider all transitions normal
-        # and disable the state machine temporarily until the result is the end
-        # of the exclusive tag
-
         curblock += chr if chr != 'end'
 
         # this result is the opening of a span
@@ -104,8 +100,12 @@ class ParserWalker
 
               elsif !active_tags.key?(tag) && taginfo.include?(:start)
                 curblock = curblock[-1]
+                openpos = pos - 1 # set the openpos in case we close consecutively and end with -1
 
                 if !inside_exclusive
+                  # if we are inside an exclusive tag, we consider all transitions normal
+                  # and disable the state machine temporarily until the result is the end
+                  # of the exclusive tag
                   active_tags[tag] = pos
                 end
 
@@ -115,7 +115,7 @@ class ParserWalker
           end
         end
 
-        #puts "#{pos}: #{chr} - #{res} - #{active_tags} - #{curblock}"
+        #puts "#{pos}: #{chr} - #{res} - #{active_tags} - #{curblock}, #{lastopenpos}, #{openpos}"
         #puts "#{pos}: #{chr} - #{res} - #{sm.current_state},#{sm.previous_state} - #{parser_builder.state_tag_table[sm.previous_state]}"
       end
 

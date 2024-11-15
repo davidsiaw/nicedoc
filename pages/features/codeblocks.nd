@@ -1,0 +1,49 @@
+title: Code Blocks
+type: manual
+---
+
+# Code blocks
+
+Code blocks are in general special areas of text with boxes drawn around them and set to a monospace font inside of which they can display code in an easily readable manner. They can be created by indenting text with 4 spaces, or writing three backticks consecutively before or after a block of code:
+
+## Using indents
+
+```
+    some code block text
+```
+
+The above code produces:
+
+    some code block text
+
+## Using backticks
+
+    ```
+    some text
+    with stuff
+    ```
+
+The above code produces:
+
+```
+some text
+with stuff
+```
+
+## Extra indentation
+
+Any indentation beyond 4 spaces is then inserted into the contents of the code block.
+
+```
+    indented text 1
+    indented text 2
+        more indented text 
+         more indented text 2
+```
+
+The above code produces:
+
+    indented text 1
+    indented text 2
+        more indented text 
+         more indented text 2

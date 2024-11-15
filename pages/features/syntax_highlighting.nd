@@ -1,0 +1,24 @@
+title: Syntax Highlighting
+type: manual
+---
+
+# Syntax Highlighting
+
+It is possible to syntax highlight code in Nicedoc. Simply add the language name after the triple backticks like so:
+
+
+    ```ruby
+    def hello
+      puts "haha"
+    end
+    ```
+
+
+And you get this:
+
+
+```ruby
+def hello
+  puts "haha"
+end
+```

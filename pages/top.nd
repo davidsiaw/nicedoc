@@ -1,8 +1,20 @@
 title: Home page
-type: blog
+type: article
 ---
 
-- [[blog]]
-- [[article]]
-- [[opinion]]
-- [[manual]]
+# NiceDoc
+
+NiceDoc is an attempt at generating beautiful documentation from text that /mostly/ resembles Markdown. NiceDoc defines a Markdown-like syntax and is mostly compatible with it. It introduces some constraints to enable existing documentation to be ported to it, and also introduces some breakage against less-often and less-understood or less-sensible portions of Markdown.
+
+## Aims
+
+1. Make it easy to write beautiful online documentation with easy-to-read fonts.
+2. Make the printed pages of the online documentation beautiful and easy to read.
+3. Make it so even the un-rendered form of the documentation can still be easily read.
+
+In order to achieve the above aims, NiceDoc prescribes some rules that will make this possible to do.
+
+## Prescriptions
+
+1. Make most of the widely-used, intuitive and well-understood syntax compatible with Markdown
+2. Used a set of free and open source fonts that are beautiful, and use them throughout the documentation.

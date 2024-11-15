@@ -9,7 +9,7 @@ class ImplicitBlockHandler < BlockHandler
 
     firstchar = nil
     drop = false
-    if pi.yaml["type"] == "opinion"  && block.tag == :p
+    if pi.yaml["type"] == "opinion" || pi.yaml["type"] == "article" && block.tag == :p
       firstline = block.parse[0]
       text = nil
 

@@ -7,12 +7,22 @@ class Util
       basictext = 'SourceSerif' if pagetype == :blog || pagetype == :opinion
 
       basicsize = 1.9
-      basicsize = 1.4 if pagetype == :blog || pagetype == :opinion
-
+      basicsize = 1.7 if pagetype == :blog || pagetype == :opinion
 
       headertext = 'LinLibertine'
       headertext = 'Overpass' if pagetype == :blog || pagetype == :opinion
       #headertext = 'FiraCode' if pagetype == :blog
+
+
+      basictext = 'SourceSerif' if pagetype == :menu
+
+      basicsize = 1.4 if pagetype == :menu
+
+      headertext = 'Overpass' if pagetype == :menu
+
+      indent_amt = 1.5
+      indent_amt = 0 if pagetype == :opinion || pagetype == :article
+
 
 
       {
@@ -38,6 +48,7 @@ class Util
           h4: 2.5,
           h5: 2.3,
           h6: 2.3,
+          indent: indent_amt
         },
         weights: {
           body: 100,
@@ -95,12 +106,11 @@ class Util
         },
         fgcolor: {
           print: '#000',
-          indigo: 'hsla(232,75%,95%,1)'
+          indigo: 'hsla(232,75%,95%,80%)'
         },
         prebgcolor: {
           print: '#eee',
           indigo: 'hsla(232,15%,15%,1)'
-  
         },
         prefgcolor: {
           print: '#000',
@@ -109,6 +119,10 @@ class Util
         linkcolor: {
           print: '#337ab7',
           indigo: '#4d8bc1'
+        },
+        headcolor: {
+          print: '#000',
+          indigo: 'hsla(232,75%,95%,1)'
         }
       }
     end
@@ -149,9 +163,14 @@ class Util
       end.join("\n")
     end
 
+    def syntax_theme(profile)
+      File.read("css/syntax-#{profile}.css")
+    end
+
     def out(profile, pagetype=:article)
       <<~CSS
   
+
       @media print {
         body {
         }
@@ -164,6 +183,15 @@ class Util
         .span-overline {
           border-top: 1px solid;
         }
+      
+        #{syntax_theme(:print)}
+
+        .col-print-12 {width: 100%; margin-left:0px;}
+        .col-print-hidden { display: none}
+      } /* @media print */
+
+      @media screen {
+        #{syntax_theme(profile)}
       }
   
       @font-face {
@@ -190,6 +218,41 @@ class Util
         font-weight: 800;
       }
   
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-Regular.ttf') format('truetype');
+        font-style: normal;
+        font-weight: 100 200;
+      }
+
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-Bold.ttf') format('truetype');
+        font-style: bolder;
+        font-weight: 300 400;
+      }
+
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-ExtraBold.ttf') format('truetype');
+        font-style: bold;
+        font-weight: 700 900;
+      }
+
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-Italic.ttf') format('truetype');
+        font-style: italic;
+        font-weight: 100 200;
+      }
+
+      @font-face {
+        font-family: 'EBGaramond';
+        src:  url('EBGaramond-BoldItalic.ttf') format('truetype');
+        font-style: italic;
+        font-weight: 300;
+      }
+
       @font-face {
         font-family: 'Overpass';
         src:  url('overpass-extralight.ttf') format('truetype');
@@ -366,6 +429,9 @@ class Util
       }
   
       body {
+        font-family: #{fonts(pagetype)[:faces][:p]};
+        font-style: normal;
+
         background-color: #{profiles[:bgcolor][profile]};
         color: #{profiles[:fgcolor][profile]};
         text-align: #{fonts(pagetype)[:text_align][:p]};
@@ -416,7 +482,7 @@ class Util
       }
   
       p {
-        text-indent: #{pagetype == :opinion ? 0 : 1.5}em;
+        text-indent: #{fonts(pagetype)[:sizes][:indent]}#{fonts(pagetype)[:unit]};;
         margin-bottom: 20px;
       }
   
@@ -425,10 +491,10 @@ class Util
       }
   
       .dropcap {
-        font-size: 5rem;
+        font-size: 6rem;
         float: left;
         margin-right: 0.2rem;
-        margin-top: -1.5rem;
+        margin-top: -1.7rem;
         margin-bottom: -3.0rem;
         font-weight: 500;
       }
@@ -493,15 +559,15 @@ class Util
       }
   
       .span-bold {
-        font-weight: 400;
+        font-weight: bolder;
       }
 
       .span-verybold {
-        font-weight: 600;
+        font-weight: bold;
       }
 
       .span-superbold {
-        font-weight: 800;
+        font-weight: superbold;
       }
 
       .span-underline {
@@ -513,7 +579,9 @@ class Util
       }
 
       .span-overline {
-        border-top: 1px solid;
+        text-decoration: overline;
+
+        /*border-top: 1px solid;*/
       }
 
       .span-code {
@@ -602,13 +670,33 @@ class Util
       .menu {
         margin-top: 2em;
 
-
-
-
-
-        font-size: #{fonts(:blog)[:sizes][:p]}#{fonts(:blog)[:unit]};
+        font-size: #{fonts(:menu)[:sizes][:p]}#{fonts(:menu)[:unit]};
         font-weight: 100;
 
+      }
+
+      .menu #selected {
+        color: #{profiles[:fgcolor][profile]};
+        margin-left: -10px;
+        /* background-color: hsla(232,15%,50%,1); */
+        /* border-left: 5px solid hsla(232,15%,50%,1); */
+      }
+
+      .menu #selected:after {
+        font-family: "FontAwesome"; 
+        font-weight: 900; 
+        / * content: "\\f053";  */
+        color: #{profiles[:fgcolor][profile]};
+        position: absolute;
+        left: 10px ;
+      }
+      .menu #selected:before {
+        font-family: "FontAwesome"; 
+        font-weight: 900; 
+        content: "\\f054"; 
+        color: #{profiles[:fgcolor][profile]};
+        position: relative;
+        right: 10px ;
       }
 
       .menu .panel-heading {
@@ -626,11 +714,10 @@ class Util
       }
 
 
-
       .menu h5 {
         margin: 0px;
-        font-family: '#{fonts(:blog)[:faces][:p]}';
-        font-size: #{fonts(:blog)[:sizes][:p]}#{fonts(:blog)[:unit]};
+        font-family: '#{fonts(:menu)[:faces][:p]}';
+        font-size: #{fonts(:menu)[:sizes][:p]}#{fonts(:menu)[:unit]};
 
         line-height: 1.42857143;
       }
@@ -647,7 +734,7 @@ class Util
 
       .menu  .panel-heading+.panel-collapse>.panel-body {
 
-        border-top: 1px solid #666;
+        border-top: 1px solid hsla(232,15%,50%,1);
       }
 
       .menu .panel-group {
@@ -656,10 +743,11 @@ class Util
       }
 
       .menu ul {
+        text-align: left;
         padding-inline-start: 0px;
         list-style-type: none;
         margin-bottom: 0.5em;
-            font-family: '#{fonts(:blog)[:faces][:p]}';
+            font-family: '#{fonts(:menu)[:faces][:p]}';
       }
 
       .menu .panel-title {
@@ -683,7 +771,8 @@ class Util
           position: absolute;
           right: 30px;
       }
-      
+
+
       CSS
     end
   end

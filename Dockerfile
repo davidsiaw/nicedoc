@@ -19,6 +19,7 @@ ADD css /app/css
 ADD node_modules /app/node_modules
 ADD pages /app/pages
 ADD source /app/source
+ADD bin /app/bin
 
 EXPOSE 4567
 

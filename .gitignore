@@ -19,3 +19,9 @@ css/print-opinion.css
 .npm/
 .prebuild-dockerfile
 node_modules/
+
+.cache/
+.graphviz.graph.dot
+.graphviz.graph.svg
+.yarnrc
+build/

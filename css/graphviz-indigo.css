@@ -1,0 +1,14 @@
+
+svg {
+  fill: hsla(232,15%,21%,1);
+  stroke: hsla(232,75%,95%,80%);
+}
+
+svg text {
+  fill: hsla(232,75%,95%,80%);
+  stroke: transparent;
+}
+
+svg .edge {
+  fill: hsla(232,75%,95%,80%);
+}

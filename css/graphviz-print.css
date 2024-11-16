@@ -1,0 +1,14 @@
+
+svg {
+  fill: white;
+  stroke: black;
+}
+
+svg text {
+  fill: black;
+  stroke: transparent;
+}
+
+svg .edge {
+  fill: black;
+}

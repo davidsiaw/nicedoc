@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<!-- Generated using weaver: https://github.com/davidsiaw/weaver -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Syntax Highlighting</title>
+
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../css/plugins/iCheck/custom.css" rel="stylesheet">
+
+    	<link href="../../css/style.css" rel="stylesheet">
+
+
+    <link href="../../css/animate.css" rel="stylesheet">
+
+    <link href="../../css/indigo-manual.css" rel="stylesheet">
+
+
+
+
+</head>
+
+<body class='gray-bg'>
+
+<div id="background" style="z-index: -999; position:absolute; left:0px; right:0px; width:100%; height:100%">
+
+</div>
+
+<div id="content" style="z-index: 0">
+
+        <div id="wrapper">
+	        <div class="wrapper-content">
+	            <div class="container">
+<div class="row">  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <pre>section
+type: para
+headerlevel: 0
+listlevel: 0
+blocks 1
+</pre><blockquote><ol><li><pre>block
+tag: div
+type: empty
+level: 0
+lines: 0
+info: --- {}
+
+parse: --- []
+
+</pre></li></ol></blockquote>
+  </div>
+</div><div class="row">  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <pre>section
+type: header
+headerlevel: 1
+listlevel: 0
+blocks 1
+</pre><blockquote><ol><li><pre>block
+tag: header
+type: single
+level: 1
+lines: 1
+info: --- {}
+
+parse: ---
+- :array:
+  - :styles: []
+    :text: Syntax Highlighting
+    :start: 0
+    :end: 18
+  :rawparse: []
+  :rawtext: Syntax Highlighting
+
+> Syntax Highlighting
+</pre></li></ol><div class="row">  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <pre>section
+type: para
+headerlevel: 0
+listlevel: 0
+blocks 8
+</pre><blockquote><ol><li><pre>block
+tag: div
+type: empty
+level: 0
+lines: 0
+info: --- {}
+
+parse: --- []
+
+</pre></li><li><pre>block
+tag: div
+type: implicit
+level: 0
+lines: 1
+info: --- {}
+
+parse: ---
+- :array:
+  - :styles: []
+    :text: 'It is possible to syntax highlight code in Nicedoc. Simply add the language
+      name after the triple backticks like so:'
+    :start: 0
+    :end: 115
+  :rawparse: []
+  :rawtext: 'It is possible to syntax highlight code in Nicedoc. Simply add the language
+    name after the triple backticks like so:'
+
+> It is possible to syntax highlight code in Nicedoc. Simply add the language name after the triple backticks like so:
+</pre></li><li><pre>block
+tag: div
+type: break
+level: 0
+lines: 0
+info: --- {}
+
+parse: --- []
+
+</pre></li><li><pre>block
+tag: div
+type: indented
+level: 1
+lines: 5
+info: --- {}
+
+parse: ---
+- :array:
+  - :styles: []
+    :text: "`"
+    :start: 0
+    :end: 0
+  - :styles:
+    - :code
+    :text: "``ruby"
+    :start: 1
+    :end: 6
+  :rawparse:
+  - :tag: :code
+    :start: 1
+    :end: 0
+  :rawtext: "```ruby"
+- :array:
+  - :styles: []
+    :text: |2-
+
+      def hello
+    :start: 0
+    :end: 9
+  :rawparse: []
+  :rawtext: |2-
+
+    def hello
+- :array:
+  - :styles: []
+    :text: |2-
+
+        puts "haha"
+    :start: 0
+    :end: 13
+  :rawparse: []
+  :rawtext: |2-
+
+      puts "haha"
+- :array:
+  - :styles: []
+    :text: |2-
+
+      end
+    :start: 0
+    :end: 3
+  :rawparse: []
+  :rawtext: |2-
+
+    end
+- :array:
+  - :styles: []
+    :text: |2-
+
+      `
+    :start: 0
+    :end: 1
+  - :styles:
+    - :code
+    :text: "``"
+    :start: 2
+    :end: 3
+  :rawparse:
+  - :tag: :code
+    :start: 2
+    :end: 1
+  :rawtext: |2-
+
+    ```
+
+> ```ruby
+> 
+def hello
+> 
+  puts "haha"
+> 
+end
+> 
+```
+</pre></li><li><pre>block
+tag: div
+type: break
+level: 0
+lines: 0
+info: --- {}
+
+parse: --- []
+
+</pre></li><li><pre>block
+tag: div
+type: implicit
+level: 0
+lines: 1
+info: --- {}
+
+parse: ---
+- :array:
+  - :styles: []
+    :text: 'And you get this:'
+    :start: 0
+    :end: 16
+  :rawparse: []
+  :rawtext: 'And you get this:'
+
+> And you get this:
+</pre></li><li><pre>block
+tag: div
+type: break
+level: 0
+lines: 0
+info: --- {}
+
+parse: --- []
+
+</pre></li><li><pre>block
+tag: div
+type: explicit
+level: 0
+lines: 3
+info: ---
+:spec: ruby
+
+parse: ---
+- :array:
+  - :styles: []
+    :text: def hello
+    :start: 0
+    :end: 8
+  :rawparse: []
+  :rawtext: def hello
+- :array:
+  - :styles: []
+    :text: '  puts "haha"'
+    :start: 0
+    :end: 12
+  :rawparse: []
+  :rawtext: '  puts "haha"'
+- :array:
+  - :styles: []
+    :text: end
+    :start: 0
+    :end: 2
+  :rawparse: []
+  :rawtext: end
+
+> def hello
+>   puts "haha"
+> end
+</pre></li></ol></blockquote>
+  </div>
+</div></blockquote>
+  </div>
+</div>
+	            </div>
+			</div>
+		</div>
+
+</div>
+
+    <!-- Mainly scripts -->
+    <script src="../../js/jquery-3.1.1.min.js"></script>
+    <script src="../../js/jquery-ui-1.10.4.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../../js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			asciimath2jax: {
+				delimiters: [['$$$MATH$$$','$$$ENDMATH$$$']]
+			}
+		});
+	</script>
+    <script src="../../js/MathJax/MathJax.js?config=AM_HTMLorMML-full" async></script>
+
+
+
+
+    <!-- Custom and plugin javascript -->
+    <script src="../../js/weaver.js"></script>
+    
+
+    <script>
+
+
+
+$( document ).ready(function() {
+
+
+
+});
+    </script>
+
+
+
+</body>
+
+</html>
+

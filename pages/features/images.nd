@@ -4,6 +4,18 @@ type: manual
 
 # Images
 
+## Nicedoc Image Syntax
+
+    ```image
+    src: kitten.jpg
+    alt: Kitten
+    ```
+
+```image
+src: kitten.jpg
+alt: Kitten
+```
+
 ## Traditional Markdown Image Syntax
 
     ![Kitten](kitten.jpg#thumbnail) 

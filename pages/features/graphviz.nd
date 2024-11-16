@@ -1,0 +1,62 @@
+title: Graphviz
+type: manual
+---
+
+# Graphviz
+
+Nicedoc allows the use of Graphviz. It defaults to generating SVG from the contents of a `graphviz:dot` labelled block. Simply write things in your block as if you would write a normal dotfile.
+
+## Example
+
+    ```graphviz:dot
+    digraph {
+        rankdir=LR;
+        a -> b;
+        b -> c;
+        c -> d;
+        d -> a;
+    }
+    ```
+
+```graphviz:dot
+digraph {
+  	rankdir=LR;
+    ratio="0.5625";
+    a -> b;
+    b -> c;
+    c -> d;
+}
+```
+
+## Another example
+
+Showing a path
+
+    ```graphviz:dot
+    graph {
+        rankdir=LR;
+        a -- b[color=red,penwidth=3.0];
+        b -- c;
+        c -- d[color=red,penwidth=3.0];
+        d -- e;
+        e -- f;
+        a -- d;
+        b -- d[color=red,penwidth=3.0];
+        c -- f[color=red,penwidth=3.0];
+    }
+    ```
+
+
+```graphviz:dot
+graph {
+  	rankdir=LR;
+    a -- b[color=red,penwidth=3.0];
+    b -- c;
+    c -- d[color=red,penwidth=3.0];
+    d -- e;
+    e -- f;
+    a -- d;
+    b -- d[color=red,penwidth=3.0];
+    c -- f[color=red,penwidth=3.0];
+}
+```

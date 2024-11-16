@@ -4,7 +4,7 @@ FROM ruby
 RUN curl -sL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_setup.sh
 RUN bash /tmp/nodesource_setup.sh
 
-RUN apt-get update && apt-get -y install build-essential nodejs
+RUN apt-get update && apt-get -y install build-essential nodejs graphviz
 
 ADD Gemfile /app/Gemfile
 ADD Gemfile.lock /app/Gemfile.lock

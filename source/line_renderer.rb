@@ -303,7 +303,7 @@ class LineRenderer
 
           # and then theres images :rollseyes:
           front_mdimg = curr_style == :bangsq && next_style == :parens
-          commit_mdlink = prev_style == :bangsq && curr_style == :parens
+          commit_mdlink |= prev_style == :bangsq && curr_style == :parens
 
           if front_mdlink || front_mdimg
             # if we see the pattern, don't render this and move next
@@ -325,7 +325,7 @@ class LineRenderer
             linktext = rawtext[sqparen[:start]..sqparen[:end]]
             linkhref = rawtext[rdparen[:start]..rdparen[:end]]
 
-            if prev_style == square
+            if prev_style == :square
               a linktext, href: linkhref
             elsif
               image "#{linkhref}", alt: linktext

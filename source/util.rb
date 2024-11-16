@@ -167,6 +167,10 @@ class Util
       File.read("css/syntax-#{profile}.css")
     end
 
+    def graphviz_theme(profile)
+      File.read("css/graphviz-#{profile}.css")
+    end
+
     def out(profile, pagetype=:article)
       <<~CSS
   
@@ -185,13 +189,29 @@ class Util
         }
       
         #{syntax_theme(:print)}
+        #{graphviz_theme(:print)}
 
         .col-print-12 {width: 100%; margin-left:0px;}
         .col-print-hidden { display: none}
+
       } /* @media print */
 
       @media screen {
         #{syntax_theme(profile)}
+        #{graphviz_theme(profile)}
+      }
+
+      svg {
+        font-family: #{fonts(pagetype)[:sizes][:p]}#{fonts(pagetype)[:unit]};
+        margin-top: 10px;
+      }
+
+      .nicedoc-figure {
+        display: inline;
+      }
+
+      .nicedoc-figureholder {
+        text-align: center;
       }
   
       @font-face {

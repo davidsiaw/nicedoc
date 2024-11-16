@@ -16,3 +16,6 @@ type: manual
 
 ## This is an external page
 - [[https://example.com]]
+
+## Traditional markdown link
+- [linktext](https://example.com)

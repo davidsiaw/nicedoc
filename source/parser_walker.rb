@@ -26,7 +26,7 @@ class ParserWalker
       end
 
       if t0[:x1] <= t1[:x0]
-        result << {styles: curtags.clone, text: @text[t0[:x1]..t1[:x0]] }
+        result << {styles: curtags.clone, text: @text[t0[:x1]..t1[:x0]], start: p0, end: p1}
       end
 
     end
@@ -93,12 +93,14 @@ class ParserWalker
           if !tag_list.nil?
             tag_list.each do |tag, taginfo|
               if active_tags.key?(tag) && taginfo.include?(:end)
+                #puts "end #{tag}"
                 startpos = active_tags[tag]
                 parses << {tag: tag, start: startpos, end: openpos}
                 curblock = curblock[-1]
                 active_tags.delete(tag)
 
               elsif !active_tags.key?(tag) && taginfo.include?(:start)
+                #puts "start #{tag}"
                 curblock = curblock[-1]
                 openpos = pos - 1 # set the openpos in case we close consecutively and end with -1
 
@@ -115,7 +117,7 @@ class ParserWalker
           end
         end
 
-        #puts "#{pos}: #{chr} - #{res} - #{active_tags} - #{curblock}, #{lastopenpos}, #{openpos}"
+        #puts "#{pos}: #{chr} - #{res} - #{active_tags} - #{curblock}, #{lastopenpos}, #{openpos}, #{parses}"
         #puts "#{pos}: #{chr} - #{res} - #{sm.current_state},#{sm.previous_state} - #{parser_builder.state_tag_table[sm.previous_state]}"
       end
 

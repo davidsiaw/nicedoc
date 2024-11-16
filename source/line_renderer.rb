@@ -211,7 +211,6 @@ class DblsquareOverrideRenderer < DefaultSpanRenderer
   end
 end
 
-
 class SqparensOverrideRenderer < DefaultSpanRenderer
 
   def latek
@@ -268,13 +267,25 @@ class LineRenderer
 
   def render(context)
     pi = @pi
+    parase = @parse
     @parse.each do |arr|
 
       # binding.pry
+      # $stderr.puts @parse
+
+      rawparse = arr[:rawparse]
+      rawtext = arr[:rawtext]
+
+      # do not render anything before this pos
+      do_not_render_end = -1
 
       context.send(@override) do
 
         arr[:array].each_with_index do |arspan, idx|
+
+          next if arspan[:start] < do_not_render_end
+
+          #$stderr.puts arspan
 
           prev_arspan = arr[:array][idx-1]
           next_arspan = arr[:array][idx+1]
@@ -284,6 +295,9 @@ class LineRenderer
           curr_style = arspan.nil? || arspan[:styles].nil?  ? nil : arspan[:styles][0]
 
           # support for markdown style links
+          # markdown style links are stupid. the person who came up with having syntax
+          # that involves two enclosed text spaces one after another needs to have their
+          # head checked. 
           front_mdlink = curr_style == :square && next_style == :parens
           commit_mdlink = prev_style == :square && curr_style == :parens
 
@@ -292,8 +306,26 @@ class LineRenderer
             next
 
           elsif commit_mdlink
-            # if we see the pattern behind us, render all the info
-            a prev_arspan[:text], href: arspan[:text]
+            # if we see the pattern behind us, first extract the
+            # raw parse info and then render that based on the raw text of the line
+              # pre rawparse.inspect
+
+              # pre prev_arspan.inspect
+              # pre arspan.inspect
+
+            sqparen = rawparse.find {|x| x[:start] == prev_arspan[:start]}
+            rdparen = rawparse.find {|x| x[:start] == arspan[:start]}
+
+              # pre sqparen.inspect
+
+            linktext = rawtext[sqparen[:start]..sqparen[:end]]
+            linkhref = rawtext[rdparen[:start]..rdparen[:end]]
+
+            a linktext, href: linkhref
+
+            # if there was anything in those parens or links, tell the subsequent renderers to
+            # skip them (goddamn markdown is bad)
+            do_not_render_end = rdparen[:end]
 
           elsif arspan[:styles].length == 0
             text arspan[:text]

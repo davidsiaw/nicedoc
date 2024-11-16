@@ -14,7 +14,9 @@ class LineParser
     #p pw.parse_positions
 
     {
-      array: pw.spans
+      array: pw.spans,
+      rawparse: pw.complete_parses,
+      rawtext: @text
     }
   end
 end

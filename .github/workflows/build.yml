@@ -27,6 +27,16 @@ jobs:
 
         docker push davidsiaw/nicedoc:latest
         docker push davidsiaw/nicedoc:$TAG
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: push master
+      run: |-
+        git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+        git config --global user.email "874280+davidsiaw@users.noreply.github.com"
+        sh deploy.sh
+
 'on':
   push:
     branches:

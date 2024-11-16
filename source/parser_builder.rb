@@ -11,6 +11,7 @@ class ParserBuilder
    strikethrough: { front: "--",  back: "--" },
         overline: { front: "^",   back: "^" },
           square: { front: "[",   back: "]" },
+          bangsq: { front: "![",   back: "]" },
           parens: { front: "(",   back: ")" },
             code: { front: "`",   back: "`", exclusive: true },
        dblsquare: { front: "[[",  back: "]]", exclusive: true },

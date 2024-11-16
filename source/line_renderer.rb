@@ -301,7 +301,11 @@ class LineRenderer
           front_mdlink = curr_style == :square && next_style == :parens
           commit_mdlink = prev_style == :square && curr_style == :parens
 
-          if front_mdlink
+          # and then theres images :rollseyes:
+          front_mdimg = curr_style == :bangsq && next_style == :parens
+          commit_mdlink = prev_style == :bangsq && curr_style == :parens
+
+          if front_mdlink || front_mdimg
             # if we see the pattern, don't render this and move next
             next
 
@@ -321,7 +325,14 @@ class LineRenderer
             linktext = rawtext[sqparen[:start]..sqparen[:end]]
             linkhref = rawtext[rdparen[:start]..rdparen[:end]]
 
-            a linktext, href: linkhref
+            if prev_style == square
+              a linktext, href: linkhref
+            elsif
+              image "#{linkhref}", alt: linktext
+            else
+              # our mistake
+              text "#{linktext}#{linkhref}"
+            end
 
             # if there was anything in those parens or links, tell the subsequent renderers to
             # skip them (goddamn markdown is bad)

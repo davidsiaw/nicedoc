@@ -3,19 +3,25 @@ type: manual
 ---
 
 ## This is a local page
+    [[list]]
 - [[list]]
 
 ## This is a sub page
+    [[link/pageone]]
 - [[link/pageone]]
 
 ## Back to top
+    [[/]]
 - [[/]]
 
 ## This is a absolute link
+    [[/features/math]]
 - [[/features/math]]
 
 ## This is an external page
+    [[https://example.com]]
 - [[https://example.com]]
 
 ## Traditional markdown link
+    [linktext](https://example.com)
 - [linktext](https://example.com)

@@ -1,0 +1,11 @@
+title: Images
+type: manual
+---
+
+# Images
+
+## Traditional Markdown Image Syntax
+
+    ![Kitten](kitten.jpg#thumbnail) 
+
+![Kitten](kitten.jpg#thumbnail) 

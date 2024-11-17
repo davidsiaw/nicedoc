@@ -8,7 +8,7 @@ mv build/.git gitbak
 rm -rf build
 mkdir -p build/weaver
 sleep 2
-docker run --rm -v $PWD/pages:/app/pages -v $PWD/build:/app/build davidsiaw/nicedoc sh bin/build.sh
+docker run --rm -v $PWD/pages:/app/pages -v $PWD/images:/app/images -v $PWD/build:/app/build davidsiaw/nicedoc sh bin/build.sh
 mv gitbak build/.git
 cd build
 echo nicedoc.astrobunny.net > CNAME

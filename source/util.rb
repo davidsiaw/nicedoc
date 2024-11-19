@@ -174,7 +174,6 @@ class Util
     def out(profile, pagetype=:article)
       <<~CSS
   
-
       @media print {
         body {
         }
@@ -194,12 +193,63 @@ class Util
         .col-print-12 {width: 100%; margin-left:0px;}
         .col-print-hidden { display: none}
 
+        .table-striped>tbody>tr:nth-of-type(even) {
+            background-color: #fff;
+        }
+
+        .table-striped>tbody>tr:nth-of-type(odd) {
+            background-color: #aaa;
+        }
+
+        .table > tbody > tr {
+            border-top: 1px solid #000;
+        }
+
+        .table > thead > tr  {
+            border-bottom: 1px solid #000;
+        }
+
       } /* @media print */
 
       @media screen {
         #{syntax_theme(profile)}
         #{graphviz_theme(profile)}
+
+        .table-striped>tbody>tr:nth-of-type(even) {
+            background-color: hsla(232,15%,21%,1);
+        }
+
+        .table-striped>tbody>tr:nth-of-type(odd) {
+            background-color: hsla(232,15%,25%,1);
+        }
+
+        .table > tbody > tr {
+            border-top: 1px solid hsla(232,15%,50%,1);
+        }
+
+        .table > thead > tr  {
+            border-bottom: 1px solid hsla(232,15%,50%,1);
+        }
+
       }
+
+      .table > tbody > tr > td {
+          border-top: none;
+          padding: 0px;
+      }
+      .table > thead > tr > th {
+          border-bottom: none;
+          padding: 0px;
+      }
+
+      .table > tbody > tr:first-child {
+        border-top: none;
+      }
+
+      .table > tbody > tr:last-child {
+        border-bottom: none;
+      }
+
 
       svg {
         font-family: #{fonts(pagetype)[:sizes][:p]}#{fonts(pagetype)[:unit]};

@@ -1,0 +1,39 @@
+title: CSV Table
+type: manual
+---
+
+# CSV Table
+
+    ```csv
+    1,hello,meow
+    2,world,dog
+    3,foo,cat
+    4,bar,dog
+    ```
+
+
+```csv
+1,hello,meow
+2,world,dog
+3,foo,cat
+4,bar,dog
+```
+
+# CSV Table with Header
+
+    ```csvwithheader
+    no,name,sound
+    1,hello,meow
+    2,world,dog
+    3,foo,cat
+    4,bar,dog
+    ```
+
+
+```csvwithheader
+no,name,sound
+1,hello,meow
+2,world,dog
+3,foo,cat
+4,bar,dog
+```

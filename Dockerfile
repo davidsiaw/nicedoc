@@ -1,10 +1,8 @@
 FROM ruby
 
+COPY .ruby.prepare /prebuild.bash
 
-RUN curl -sL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_setup.sh
-RUN bash /tmp/nodesource_setup.sh
-
-RUN apt-get update && apt-get -y install build-essential nodejs graphviz
+RUN chmod +x /prebuild.bash && /prebuild.bash
 
 ADD Gemfile /app/Gemfile
 ADD Gemfile.lock /app/Gemfile.lock

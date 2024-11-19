@@ -11,11 +11,11 @@ class Blockifier
       HeaderUnderlineLineHandler.new,
       HorizontalLineHandler.new,
       ExplicitBlockLineHandler.new,
+      IndentedLineHandler.new,
       ListLineHandler.new,
       ListSubtextLineHandler.new,
       SingleLineHandler.new,
       EmptyLineHandler.new,
-      IndentedLineHandler.new,
       ImplicitLineHandler.new
     ]
   end

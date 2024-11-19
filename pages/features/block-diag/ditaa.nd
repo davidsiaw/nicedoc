@@ -1,0 +1,28 @@
+title: DITAA
+type: manual
+---
+
+# DITAA
+
+DITAA stands for DIagrams Through Ascii Art. This makes it easy to write text-readable diagrams that also render nicely
+
+    ```ditaa
+    +----------+  /--------\   +-------+
+    |          +--+        +---+Version|
+    | lmao     |  |  Data  |   |   V3  |
+    |    +-----+  |  Base  |   |cRED{d}|
+    |    |     |  |     {s}|   +-------+
+    |    | wat |  \---+----/
+    +----+-----+
+    ```
+
+```ditaa
++----------+  /--------\   +-------+
+|          +--+        +---+Version|
+|  lmao    |  |  Data  |   |   V3  |
+|    +-----+  |  Base  |   |cRED{d}|
+|    |     |  |     {s}|   +-------+
+|    | wat |  \---+----/
++----+-----+
+```
+

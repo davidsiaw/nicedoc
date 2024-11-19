@@ -1,4 +1,13 @@
 curl -sL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_setup.sh
 bash /tmp/nodesource_setup.sh
 
-apt-get update && apt-get -y install build-essential nodejs graphviz
+apt-get update && apt-get -y install build-essential nodejs graphviz default-jre python3-pip python3-full libcairo2-dev libxt-dev libgirepository1.0-dev libcogl-pango-dev
+
+wget https://github.com/plantuml/plantuml/releases/download/v1.2024.8/plantuml-lgpl-1.2024.8.jar
+wget https://github.com/stathissideris/ditaa/releases/download/v0.11.0/ditaa-0.11.0-standalone.jar
+
+python3 -m pip config set global.break-system-packages true
+pip install wireviz nwdiag pango
+pip install --upgrade pip setuptools==57.5.0
+pip install pycairo PyGObject
+pip install --upgrade https://github.com/hdl/symbolator/tarball/master

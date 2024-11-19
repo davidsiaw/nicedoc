@@ -67,7 +67,7 @@ class BasePageGenerator < ContentGenerator
       dirs: {}
     }
 
-    pi.tree.each do |path, tpi|
+    pi.tree.sort_by{|a,b| a}.each do |path, tpi|
       z = treehash
       path.split('/')[1..-1].each do |part|
         if part.end_with?('.nd')
@@ -81,7 +81,8 @@ class BasePageGenerator < ContentGenerator
     end
 
     context.div class: "menu" do
-      this.geninternalmenu(this.pi, self, treehash, "Home", "/")
+      homepage_title = this.pi.tree['pages/top.nd'].yaml&.fetch('title')
+      this.geninternalmenu(this.pi, self, treehash, homepage_title, "/")
 
     end
 

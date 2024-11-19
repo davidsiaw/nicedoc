@@ -12,3 +12,7 @@ svg text {
 svg .edge {
   fill: black;
 }
+
+svg rect {
+  fill: transparent;
+}

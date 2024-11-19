@@ -1,0 +1,21 @@
+title: PlantUML YAML
+type: manual
+---
+
+# YAML Diagram
+
+    ```plantuml:yaml
+    fruit: Apple
+    size: Large
+    color:
+      - Red
+      - Green
+    ```
+
+```plantuml:yaml
+fruit: Apple
+size: Large
+color: 
+  - Red
+  - Green
+```

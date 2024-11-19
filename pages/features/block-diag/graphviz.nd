@@ -60,3 +60,15 @@ graph {
     c -- f[color=red,penwidth=3.0];
 }
 ```
+
+```graphviz:neato -n2
+graph {
+	1 
+	[pos="0,0!" style=filled shape=circle width=0.25 color=red xlabel="a" xlp="-20,0" label= " " size=10 fixedsize=true]
+	2 
+	[pos="0,20!" style=filled shape=circle width=0.25 color=red xlabel="b" xlp="-20,20" label= " " size=10 fixedsize=true]
+	3 
+	[pos="20,0!" style=filled shape=circle width=0.25 color=red xlabel="c" xlp="40,0" label= " " size=10 fixedsize=true]
+}
+
+```

@@ -8,16 +8,16 @@
 
     <title>Graphviz</title>
 
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="../../css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../../css/plugins/iCheck/custom.css" rel="stylesheet">
 
-    	<link href="../../css/style.css" rel="stylesheet">
+    	<link href="../../../css/style.css" rel="stylesheet">
 
 
-    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../../css/animate.css" rel="stylesheet">
 
-    <link href="../../css/indigo-manual.css" rel="stylesheet">
+    <link href="../../../css/indigo-manual.css" rel="stylesheet">
 
 
 
@@ -407,7 +407,7 @@ parse: ---
 type: para
 headerlevel: 0
 listlevel: 0
-blocks 5
+blocks 6
 </pre><blockquote><ol><li><pre>block
 tag: div
 type: empty
@@ -826,6 +826,118 @@ parse: ---
 >     b -- d[color=red,penwidth=3.0];
 >     c -- f[color=red,penwidth=3.0];
 > }
+</pre></li><li><pre>block
+tag: div
+type: explicit
+level: 0
+lines: 9
+info: ---
+:spec: graphviz:neato -n2
+
+parse: ---
+- :array:
+  - :styles: []
+    :text: graph {
+    :start: 0
+    :end: 6
+  :rawparse: []
+  :rawtext: graph {
+- :array:
+  - :styles: []
+    :text: "\t1 "
+    :start: 0
+    :end: 2
+  :rawparse: []
+  :rawtext: "\t1 "
+- :array:
+  - :styles: []
+    :text: "\t"
+    :start: 0
+    :end: 2
+  - :styles:
+    - :square
+    :text: pos="0,0!" style=filled shape=circle width=0.25 color=red xlabel="a" xlp="-20,0"
+      label= " " size=10 fixedsize=true
+    :start: 2
+    :end: 115
+  :rawparse:
+  - :tag: :square
+    :start: 2
+    :end: 115
+  :rawtext: "\t[pos=\"0,0!\" style=filled shape=circle width=0.25 color=red xlabel=\"a\"
+    xlp=\"-20,0\" label= \" \" size=10 fixedsize=true]"
+- :array:
+  - :styles: []
+    :text: "\t2 "
+    :start: 0
+    :end: 2
+  :rawparse: []
+  :rawtext: "\t2 "
+- :array:
+  - :styles: []
+    :text: "\t"
+    :start: 0
+    :end: 2
+  - :styles:
+    - :square
+    :text: pos="0,20!" style=filled shape=circle width=0.25 color=red xlabel="b" xlp="-20,20"
+      label= " " size=10 fixedsize=true
+    :start: 2
+    :end: 117
+  :rawparse:
+  - :tag: :square
+    :start: 2
+    :end: 117
+  :rawtext: "\t[pos=\"0,20!\" style=filled shape=circle width=0.25 color=red xlabel=\"b\"
+    xlp=\"-20,20\" label= \" \" size=10 fixedsize=true]"
+- :array:
+  - :styles: []
+    :text: "\t3 "
+    :start: 0
+    :end: 2
+  :rawparse: []
+  :rawtext: "\t3 "
+- :array:
+  - :styles: []
+    :text: "\t"
+    :start: 0
+    :end: 2
+  - :styles:
+    - :square
+    :text: pos="20,0!" style=filled shape=circle width=0.25 color=red xlabel="c" xlp="40,0"
+      label= " " size=10 fixedsize=true
+    :start: 2
+    :end: 115
+  :rawparse:
+  - :tag: :square
+    :start: 2
+    :end: 115
+  :rawtext: "\t[pos=\"20,0!\" style=filled shape=circle width=0.25 color=red xlabel=\"c\"
+    xlp=\"40,0\" label= \" \" size=10 fixedsize=true]"
+- :array:
+  - :styles: []
+    :text: "}"
+    :start: 0
+    :end: 0
+  :rawparse: []
+  :rawtext: "}"
+- :array:
+  - :styles: []
+    :text:
+    :start: -1
+    :end: 0
+  :rawparse: []
+  :rawtext: ''
+
+> graph {
+> 	1 
+> 	[pos="0,0!" style=filled shape=circle width=0.25 color=red xlabel="a" xlp="-20,0" label= " " size=10 fixedsize=true]
+> 	2 
+> 	[pos="0,20!" style=filled shape=circle width=0.25 color=red xlabel="b" xlp="-20,20" label= " " size=10 fixedsize=true]
+> 	3 
+> 	[pos="20,0!" style=filled shape=circle width=0.25 color=red xlabel="c" xlp="40,0" label= " " size=10 fixedsize=true]
+> }
+> 
 </pre></li></ol></blockquote>
   </div>
 </div></blockquote>
@@ -840,11 +952,11 @@ parse: ---
 </div>
 
     <!-- Mainly scripts -->
-    <script src="../../js/jquery-3.1.1.min.js"></script>
-    <script src="../../js/jquery-ui-1.10.4.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="../../js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="../../../js/jquery-3.1.1.min.js"></script>
+    <script src="../../../js/jquery-ui-1.10.4.min.js"></script>
+    <script src="../../../js/bootstrap.min.js"></script>
+    <script src="../../../js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../../../js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 	<script type="text/x-mathjax-config">
 		MathJax.Hub.Config({
 			asciimath2jax: {
@@ -852,13 +964,13 @@ parse: ---
 			}
 		});
 	</script>
-    <script src="../../js/MathJax/MathJax.js?config=AM_HTMLorMML-full" async></script>
+    <script src="../../../js/MathJax/MathJax.js?config=AM_HTMLorMML-full" async></script>
 
 
 
 
     <!-- Custom and plugin javascript -->
-    <script src="../../js/weaver.js"></script>
+    <script src="../../../js/weaver.js"></script>
     
 
     <script>

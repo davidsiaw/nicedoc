@@ -12,3 +12,7 @@ svg text {
 svg .edge {
   fill: hsla(232,75%,95%,80%);
 }
+
+svg rect {
+  fill: transparent;
+}

@@ -6,18 +6,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>source of /app/pages/features/graphviz.nd</title>
+    <title>source of /app/pages/features/block-diag/graphviz.nd</title>
 
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="../../css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../../../css/plugins/iCheck/custom.css" rel="stylesheet">
 
-    	<link href="../../css/style.css" rel="stylesheet">
+    	<link href="../../../css/style.css" rel="stylesheet">
 
 
-    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../../css/animate.css" rel="stylesheet">
 
-    <link href="../../css/indigo.css" rel="stylesheet">
+    <link href="../../../css/indigo.css" rel="stylesheet">
 
 
 
@@ -97,6 +97,18 @@ graph {
     c -- f[color=red,penwidth=3.0];
 }
 ```
+
+```graphviz:neato -n2
+graph {
+	1 
+	[pos="0,0!" style=filled shape=circle width=0.25 color=red xlabel="a" xlp="-20,0" label= " " size=10 fixedsize=true]
+	2 
+	[pos="0,20!" style=filled shape=circle width=0.25 color=red xlabel="b" xlp="-20,20" label= " " size=10 fixedsize=true]
+	3 
+	[pos="20,0!" style=filled shape=circle width=0.25 color=red xlabel="c" xlp="40,0" label= " " size=10 fixedsize=true]
+}
+
+```
 </pre></full></div>
 	            </div>
 			</div>
@@ -105,11 +117,11 @@ graph {
 </div>
 
     <!-- Mainly scripts -->
-    <script src="../../js/jquery-3.1.1.min.js"></script>
-    <script src="../../js/jquery-ui-1.10.4.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="../../js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="../../../js/jquery-3.1.1.min.js"></script>
+    <script src="../../../js/jquery-ui-1.10.4.min.js"></script>
+    <script src="../../../js/bootstrap.min.js"></script>
+    <script src="../../../js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../../../js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 	<script type="text/x-mathjax-config">
 		MathJax.Hub.Config({
 			asciimath2jax: {
@@ -117,13 +129,13 @@ graph {
 			}
 		});
 	</script>
-    <script src="../../js/MathJax/MathJax.js?config=AM_HTMLorMML-full" async></script>
+    <script src="../../../js/MathJax/MathJax.js?config=AM_HTMLorMML-full" async></script>
 
 
 
 
     <!-- Custom and plugin javascript -->
-    <script src="../../js/weaver.js"></script>
+    <script src="../../../js/weaver.js"></script>
     
 
     <script>

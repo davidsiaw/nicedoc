@@ -390,7 +390,7 @@ parse: ---
 type: para
 headerlevel: 0
 listlevel: 0
-blocks 1
+blocks 3
 </pre><blockquote><ol><li><pre>block
 tag: ul
 type: list
@@ -408,10 +408,6 @@ info: ---
   - 2
   - 3
   - 4
-  - 10
-  - 11
-  - 12
-  - 13
 - :type: :leaf
   :parent: *1
   :text:
@@ -432,8 +428,6 @@ info: ---
   :children:
   - 5
   - 6
-  - 7
-  - 9
 - :type: :leaf
   :parent: *2
   :text:
@@ -442,75 +436,7 @@ info: ---
   :parent: *2
   :text:
   - c1
-- &3
-  :type: :branch
-  :parent: *2
-  :level: 4
-  :tag: :ul
-  :children:
-  - 8
-- :type: :leaf
-  :parent: *3
-  :text:
-  - c1c
-  - subtext of c1c
-- :type: :leaf
-  :parent: *2
-  :text:
-  - c2
-- :type: :leaf
-  :parent: *1
-  :text:
-  - d
-- :type: :leaf
-  :parent: *1
-  :text:
-  - e
-- :type: :leaf
-  :parent: *1
-  :text:
-  - ordered
-- &4
-  :type: :branch
-  :parent: *1
-  :level: 2
-  :tag: :ol
-  :children:
-  - 14
-  - 15
-  - 17
-  - 18
-- :type: :leaf
-  :parent: *4
-  :text:
-  - one
-- &5
-  :type: :branch
-  :parent: *4
-  :level: 3
-  :tag: :ul
-  :children:
-  - 16
-- :type: :leaf
-  :parent: *5
-  :text:
-  - dda
-- :type: :leaf
-  :parent: *4
-  :text:
-  - two
-- &6
-  :type: :branch
-  :parent: *4
-  :level: 3
-  :tag: :ul
-  :children:
-  - 19
-- :type: :leaf
-  :parent: *6
-  :text:
-  - awdwd
-:last: *6
+:last: *2
 
 parse: ---
 - :type: :branch
@@ -522,10 +448,6 @@ parse: ---
   - 2
   - 3
   - 4
-  - 10
-  - 11
-  - 12
-  - 13
 - :type: :leaf
   :parent: &2
     :type: :branch
@@ -574,8 +496,6 @@ parse: ---
   :children: &3
   - 5
   - 6
-  - 7
-  - 9
 - :type: :leaf
   :parent: &4
     :type: :branch
@@ -605,39 +525,133 @@ parse: ---
       :end: 1
     :rawparse: []
     :rawtext: c1
-- :type: :branch
-  :parent: *4
-  :level: 4
+
+</pre></li><li><pre>block
+tag: div
+type: indented
+level: 1
+lines: 2
+info: --- {}
+
+parse: ---
+- :array:
+  - :styles: []
+    :text: "- c1c"
+    :start: 0
+    :end: 4
+  :rawparse: []
+  :rawtext: "- c1c"
+- :array:
+  - :styles: []
+    :text: |2-
+
+        subtext of c1c
+    :start: 0
+    :end: 16
+  :rawparse: []
+  :rawtext: |2-
+
+      subtext of c1c
+
+> - c1c
+> 
+  subtext of c1c
+</pre></li><li><pre>block
+tag: ul
+type: list
+level: 0
+lines: 0
+info: ---
+:tags:
+- &1
+  :type: :branch
+  :parent:
+  :level: 2
   :tag: :ul
-  :children: &5
+  :children:
+  - 1
+- :type: :leaf
+  :parent: *1
+  :text:
+  - c2
+- &2
+  :type: :branch
+  :parent:
+  :level: 0
+  :tag: :ul
+  :children:
+  - 3
+  - 4
+  - 5
+  - 6
+- :type: :leaf
+  :parent: *2
+  :text:
+  - d
+- :type: :leaf
+  :parent: *2
+  :text:
+  - e
+- :type: :leaf
+  :parent: *2
+  :text:
+  - ordered
+- &3
+  :type: :branch
+  :parent: *2
+  :level: 2
+  :tag: :ol
+  :children:
+  - 7
   - 8
+  - 10
+  - 11
+- :type: :leaf
+  :parent: *3
+  :text:
+  - one
+- &4
+  :type: :branch
+  :parent: *3
+  :level: 3
+  :tag: :ul
+  :children:
+  - 9
+- :type: :leaf
+  :parent: *4
+  :text:
+  - dda
+- :type: :leaf
+  :parent: *3
+  :text:
+  - two
+- &5
+  :type: :branch
+  :parent: *3
+  :level: 3
+  :tag: :ul
+  :children:
+  - 12
+- :type: :leaf
+  :parent: *5
+  :text:
+  - awdwd
+:last: *5
+
+parse: ---
+- :type: :branch
+  :parent:
+  :level: 2
+  :tag: :ul
+  :children: &1
+  - 1
 - :type: :leaf
   :parent:
     :type: :branch
-    :parent: *4
-    :level: 4
+    :parent:
+    :level: 2
     :tag: :ul
-    :children: *5
-  :text:
-  - c1c
-  - subtext of c1c
-  :parse:
-  - :array:
-    - :styles: []
-      :text: c1c
-      :start: 0
-      :end: 2
-    :rawparse: []
-    :rawtext: c1c
-  - :array:
-    - :styles: []
-      :text: subtext of c1c
-      :start: 0
-      :end: 13
-    :rawparse: []
-    :rawtext: subtext of c1c
-- :type: :leaf
-  :parent: *4
+    :children: *1
   :text:
   - c2
   :parse:
@@ -648,8 +662,22 @@ parse: ---
       :end: 1
     :rawparse: []
     :rawtext: c2
+- :type: :branch
+  :parent:
+  :level: 0
+  :tag: :ul
+  :children: &2
+  - 3
+  - 4
+  - 5
+  - 6
 - :type: :leaf
-  :parent: *2
+  :parent: &3
+    :type: :branch
+    :parent:
+    :level: 0
+    :tag: :ul
+    :children: *2
   :text:
   - d
   :parse:
@@ -661,7 +689,7 @@ parse: ---
     :rawparse: []
     :rawtext: d
 - :type: :leaf
-  :parent: *2
+  :parent: *3
   :text:
   - e
   :parse:
@@ -673,7 +701,7 @@ parse: ---
     :rawparse: []
     :rawtext: e
 - :type: :leaf
-  :parent: *2
+  :parent: *3
   :text:
   - ordered
   :parse:
@@ -685,21 +713,21 @@ parse: ---
     :rawparse: []
     :rawtext: ordered
 - :type: :branch
-  :parent: *2
+  :parent: *3
   :level: 2
   :tag: :ol
-  :children: &6
-  - 14
-  - 15
-  - 17
-  - 18
+  :children: &4
+  - 7
+  - 8
+  - 10
+  - 11
 - :type: :leaf
-  :parent: &7
+  :parent: &5
     :type: :branch
-    :parent: *2
+    :parent: *3
     :level: 2
     :tag: :ol
-    :children: *6
+    :children: *4
   :text:
   - one
   :parse:
@@ -711,18 +739,18 @@ parse: ---
     :rawparse: []
     :rawtext: one
 - :type: :branch
-  :parent: *7
+  :parent: *5
   :level: 3
   :tag: :ul
-  :children: &8
-  - 16
+  :children: &6
+  - 9
 - :type: :leaf
   :parent:
     :type: :branch
-    :parent: *7
+    :parent: *5
     :level: 3
     :tag: :ul
-    :children: *8
+    :children: *6
   :text:
   - dda
   :parse:
@@ -734,7 +762,7 @@ parse: ---
     :rawparse: []
     :rawtext: dda
 - :type: :leaf
-  :parent: *7
+  :parent: *5
   :text:
   - two
   :parse:
@@ -746,18 +774,18 @@ parse: ---
     :rawparse: []
     :rawtext: two
 - :type: :branch
-  :parent: *7
+  :parent: *5
   :level: 3
   :tag: :ul
-  :children: &9
-  - 19
+  :children: &7
+  - 12
 - :type: :leaf
   :parent:
     :type: :branch
-    :parent: *7
+    :parent: *5
     :level: 3
     :tag: :ul
-    :children: *9
+    :children: *7
   :text:
   - awdwd
   :parse:

@@ -150,6 +150,7 @@ class Util
             font-weight: #{fonts(pagetype)[:weights][sym]};
             margin-top: #{fonts(pagetype)[:margin_top][sym]}px;
             margin-bottom: #{fonts(pagetype)[:margin_bottom][sym]}px;
+            text-align: #{fonts(pagetype)[:text_align][sym]};
           }
 
           .menu #{sym} {
@@ -740,9 +741,19 @@ class Util
       .menu {
         margin-top: 2em;
 
-        font-size: #{fonts(:menu)[:sizes][:p]}#{fonts(:menu)[:unit]};
         font-weight: 100;
+      }
 
+      .sidemenu {
+        font-family: '#{fonts(:menu)[:faces][:p]}';
+        font-size: #{fonts(:menu)[:sizes][:p]}#{fonts(:menu)[:unit]};
+      }
+
+      .mobilemenu {
+        border-top: 1px solid #{profiles[:fgcolor][profile]};
+        padding-top: 2em;
+        font-family: '#{fonts(:menu)[:faces][:p]}';
+        font-size: #{fonts(:menu)[:sizes][:p]+0.5}#{fonts(:menu)[:unit]};
       }
 
       .menu #selected {
@@ -787,7 +798,7 @@ class Util
       .menu h5 {
         margin: 0px;
         font-family: '#{fonts(:menu)[:faces][:p]}';
-        font-size: #{fonts(:menu)[:sizes][:p]}#{fonts(:menu)[:unit]};
+        font-size: inherit;
 
         line-height: 1.42857143;
       }
